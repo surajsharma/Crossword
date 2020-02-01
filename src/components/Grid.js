@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import Cell from "./Cell";
+import Cell from "./Cell";
 import "../styles/cell.css";
 
 import Word from "./Word";
@@ -8,7 +8,28 @@ import Word from "./Word";
 export default class Grid extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            grid: []
+        };
+    }
+
+    populate() {
+        let width = this.props.data.width;
+        let height = this.props.data.height;
+        let newGrid = [];
+
+        for (let i = 1; i < width; i++) {
+            for (let j = 1; j < height; j++) {
+                newGrid.push(
+                    <Cell x={i} y={j} value={""} key={Math.random()} />
+                );
+            }
+        }
+        this.setState({ grid: newGrid });
+    }
+
+    componentDidMount() {
+        this.populate();
     }
 
     classNames = (props) =>
@@ -46,6 +67,7 @@ export default class Grid extends Component {
                         // How did props get here?
                     })}
                 >
+                    {this.state.grid}
                     {words}
                 </svg>
             </div>
