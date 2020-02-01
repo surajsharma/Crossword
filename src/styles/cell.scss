@@ -1,0 +1,31 @@
+//define a variable
+
+.crossword__grid {
+    background-color: blue;
+    border: 1px solid red;
+    /*use a variable*/
+}
+
+.grid_background {
+    background-color: green;
+}
+
+.crossword__grid-background {
+    background-color: red;
+    /*use a variable*/
+}
+
+.small {
+    font: 2px sans-serif;
+}
+
+.heavy {
+    font: bold 7px sans-serif;
+}
+
+/* Note that the color of the text is set with the    *
+ * fill property, the color property is for HTML only */
+.Rrrrr {
+    font: italic 40px serif;
+    fill: red;
+}

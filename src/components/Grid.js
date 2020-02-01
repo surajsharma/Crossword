@@ -1,0 +1,54 @@
+import React, { Component } from "react";
+// import Cell from "./Cell";
+import "../styles/cell.css";
+import word from "./Word";
+import Word from "./Word";
+
+//use content loader
+export default class Grid extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    classNames = (props) =>
+        Object.keys(props)
+            .filter((f) => props[f] === true)
+            .join(" ");
+
+    render() {
+        const dim =
+            "0 0 " +
+            (10 * this.props.data.width + 2) +
+            " " +
+            (10 * this.props.data.height + 2);
+
+        const words = this.props.data.wordList.map((word, index) => {
+            return (
+                <Word
+                    word={word.word}
+                    x={word.x}
+                    y={word.y}
+                    orientation={word.orientation}
+                    key={index}
+                />
+            );
+        });
+
+        return (
+            <div>
+                <svg
+                    viewBox={dim}
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={this.classNames({
+                        crossword__grid: true
+                        // "crossword__grid--focussed": !! props.focussedCell
+                        // How did props get here?
+                    })}
+                >
+                    {words}
+                </svg>
+            </div>
+        );
+    }
+}
