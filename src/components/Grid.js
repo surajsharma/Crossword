@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 // import Cell from "./Cell";
 import "../styles/cell.css";
-import word from "./Word";
+
 import Word from "./Word";
 
 //use content loader

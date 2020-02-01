@@ -16,8 +16,8 @@ export default class Crossword extends Component {
                     {
                         word: "Word1",
                         orientation: "down",
-                        x: 3,
-                        y: 2,
+                        x: 2,
+                        y: 1,
                         length: 5
                     },
                     {
