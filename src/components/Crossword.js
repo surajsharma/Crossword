@@ -26,6 +26,27 @@ export default class Crossword extends Component {
                         x: 1,
                         y: 2,
                         length: 5
+                    },
+                    {
+                        word: "dominate",
+                        orientation: "across",
+                        x: 2,
+                        y: 4,
+                        length: 5
+                    },
+                    {
+                        word: "forever",
+                        orientation: "down",
+                        x: 9,
+                        y: 1,
+                        length: 5
+                    },
+                    {
+                        word: "zero",
+                        orientation: "across",
+                        x: 8,
+                        y: 6,
+                        length: 5
                     }
                 ]
             }

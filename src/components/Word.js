@@ -1,27 +1,30 @@
 import React, { Component } from "react";
 import Cell from "./Cell";
+import styled from "styled-components";
 
 export default class Word extends Component {
+    const;
     render() {
         const word = this.props.word.split("");
-        return word.map((char, index) => {
+
+        if (this.props.orientation === "down") {
             return (
-                <Cell
-                    orientation={this.props.orientation}
-                    x={
-                        this.props.orientation === "across"
-                            ? this.props.x + index
-                            : this.props.x
-                    }
-                    y={
-                        this.props.orientation === "down"
-                            ? this.props.y + index
-                            : this.props.y
-                    }
-                    value={char}
-                    key={Math.random()}
-                />
+                <div className="vword xoffset yoffset">
+                    {word.map((char) => {
+                        return <Cell value={char} key={Math.random()} />;
+                    })}
+                </div>
             );
-        });
+        }
+
+        if (this.props.orientation === "across") {
+            return (
+                <div className="hword xoffset yoffset">
+                    {word.map((char) => {
+                        return <Cell value={char} key={Math.random()} />;
+                    })}
+                </div>
+            );
+        }
     }
 }
