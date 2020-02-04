@@ -9,7 +9,7 @@ export default class Cell extends Component {
 
     render() {
         const style =
-            this.props.value === "" ? "rgb(0, 100, 100)" : "rgb(200, 100, 100)";
+            this.props.value === "" ? "rgb(10, 10, 10)" : "rgb(200, 200, 200)";
 
         const x =
             this.props.x === 1

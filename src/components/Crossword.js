@@ -14,14 +14,35 @@ export default class Crossword extends Component {
                 width: 12,
                 wordList: [
                     {
-                        word: "Word1",
+                        word: "Word",
                         orientation: "down",
                         x: 2,
                         y: 1,
                         length: 5
                     },
                     {
-                        word: "Word2",
+                        word: "consolidate",
+                        orientation: "across",
+                        x: 1,
+                        y: 2,
+                        length: 5
+                    },
+                    {
+                        word: "shift",
+                        orientation: "down",
+                        x: 4,
+                        y: 2,
+                        length: 5
+                    },
+                    {
+                        word: "ice",
+                        orientation: "across",
+                        x: 4,
+                        y: 4,
+                        length: 5
+                    },
+                    {
+                        word: "consolidate",
                         orientation: "across",
                         x: 1,
                         y: 2,

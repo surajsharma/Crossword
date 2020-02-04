@@ -1,6 +1,5 @@
 .crossword__grid {
-    background-color: blue;
-    border: 1px solid red;
+    background-color: lightgrey;
     /*use a variable*/
 }
 *:focus {
@@ -12,29 +11,15 @@
     font-size: 8px;
     border: 0;
     padding: 2px;
-}
-
-.grid_background {
-    background-color: green;
-}
-
-.crossword__grid-background {
-    background-color: red;
-    /*use a variable*/
+    text-transform: uppercase;
 }
 
 .small {
     font: 2px sans-serif;
+    text-transform: uppercase;
 }
 
 .heavy {
     font: bold 7px sans-serif;
+    text-transform: uppercase;
 }
-
-/* Note that the color of the text is set with the    *
- * fill property, the color property is for HTML only */
-.Rrrrr {
-    font: italic 40px serif;
-    fill: red;
-}
-/*# sourceMappingURL=cell.css.map */
