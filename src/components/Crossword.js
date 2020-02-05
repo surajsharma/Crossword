@@ -10,8 +10,8 @@ export default class Crossword extends Component {
 
         this.state = {
             data: {
-                height: 12,
-                width: 12,
+                height: 13,
+                width: 13,
                 wordList: [
                     {
                         word: "Word",
@@ -42,10 +42,17 @@ export default class Crossword extends Component {
                         length: 5
                     },
                     {
-                        word: "consolidate",
+                        word: "truce",
                         orientation: "across",
-                        x: 1,
-                        y: 2,
+                        x: 4,
+                        y: 6,
+                        length: 5
+                    },
+                    {
+                        word: "relish",
+                        orientation: "down",
+                        x: 9,
+                        y: 5,
                         length: 5
                     }
                 ]
@@ -54,10 +61,6 @@ export default class Crossword extends Component {
     }
 
     render() {
-        return (
-            <div>
-                <Grid data={this.state.data}></Grid>
-            </div>
-        );
+        return <Grid data={this.state.data}></Grid>;
     }
 }

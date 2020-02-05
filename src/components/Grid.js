@@ -9,7 +9,8 @@ export default class Grid extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            grid: []
+            grid: [],
+            currentWord: null
         };
     }
 
@@ -37,21 +38,25 @@ export default class Grid extends Component {
             .filter((f) => props[f] === true)
             .join(" ");
 
+    handleWordClick = () => {};
+
     render() {
         const dim =
             "0 0 " +
-            (10 * this.props.data.width + 2) +
+            (10 * this.props.data.width + 3) +
             " " +
-            (10 * this.props.data.height + 2);
+            (10 * this.props.data.height + 3);
 
         const words = this.props.data.wordList.map((word, index) => {
             return (
                 <Word
+                    number={index}
                     word={word.word}
                     x={word.x}
                     y={word.y}
                     orientation={word.orientation}
-                    key={index}
+                    key={Math.random()}
+                    onClick={this.handleWordClick}
                 />
             );
         });
@@ -68,7 +73,7 @@ export default class Grid extends Component {
                     })}
                 >
                     {this.state.grid}
-                    {words}
+                    {words.reverse()}
                 </svg>
             </div>
         );

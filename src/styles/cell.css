@@ -6,6 +6,10 @@
     outline: none;
 }
 
+.word {
+    border: 1px solid red;
+}
+
 .input {
     background-color: transparent;
     font-size: 8px;
@@ -15,11 +19,19 @@
 }
 
 .small {
-    font: 2px sans-serif;
+    font: 3px sans-serif;
     text-transform: uppercase;
 }
 
 .heavy {
     font: bold 7px sans-serif;
     text-transform: uppercase;
+}
+
+.current {
+    z-index: 999;
+}
+
+.cell {
+    border: 1px solid red;
 }

@@ -8,18 +8,18 @@ export default class Cell extends Component {
     }
 
     handleFocus = () => {
-        console.log("click");
         this.setState({ editing: !this.state.editing, value: "" });
     };
 
     handleBlur = () => {
-        console.log("click");
         this.setState({ editing: !this.state.editing });
     };
 
     handleChange = (e) => {
-        console.log(e.target.value);
-        this.setState({ value: e.target.value });
+        if (e.target.value !== "") {
+            console.log(e.target.value);
+            this.setState({ value: e.target.value });
+        }
     };
 
     render() {
@@ -41,8 +41,31 @@ export default class Cell extends Component {
                 ? this.props.y
                 : this.props.y + 10 * (this.props.y - 1);
 
+        const input = (
+            <foreignObject
+                x={x}
+                y={y}
+                width="9"
+                height="9"
+                className={this.state.editing ? "input current" : "input"}
+            >
+                <div>
+                    <input
+                        ref={this.props.value}
+                        onFocus={this.handleFocus}
+                        onBlur={this.handleBlur}
+                        onChange={this.handleChange}
+                        value={this.state.inputVal}
+                        className={
+                            this.state.editing ? "input current" : "input"
+                        }
+                        maxLength="1"
+                    />
+                </div>
+            </foreignObject>
+        );
         return (
-            <svg>
+            <svg className="cell">
                 <g>
                     <rect
                         x={x}
@@ -55,7 +78,7 @@ export default class Cell extends Component {
                             stroke: "black"
                         }}
                     />
-                    <text x={x + 1} y={y + 2} className="small">
+                    <text x={x + 0.5} y={y + 2.7} className="small">
                         {this.props.number}
                     </text>
                     <text
@@ -68,18 +91,7 @@ export default class Cell extends Component {
                         {this.state.value}
                     </text>
                 </g>
-                <foreignObject x={x} y={y} width="9" height="9">
-                    <div xmlns="http://www.w3.org/1999/xhtml">
-                        <input
-                            maxLength="1"
-                            onFocus={this.handleFocus}
-                            onBlur={this.handleBlur}
-                            onChange={this.handleChange}
-                            className="input"
-                            value={this.state.inputVal}
-                        />
-                    </div>
-                </foreignObject>
+                {this.props.value === "" ? null : input}
             </svg>
         );
     }
