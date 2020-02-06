@@ -42,7 +42,7 @@ export default class Crossword extends Component {
     }
 
     checkAnswers = () => {
-        console.log("check answers");
+        Swal.fire("Correct!");
     };
 
     render() {
