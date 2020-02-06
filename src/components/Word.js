@@ -13,8 +13,8 @@ export default class Word extends Component {
     }
 
     componentDidUpdate() {
-        if (this.state.solved === this.props.word) {
-            swal.fire("Word Solved!");
+        if (this.state.solved.length === this.props.word.length) {
+            this.props.wordChange(this.state.solved);
         }
     }
 

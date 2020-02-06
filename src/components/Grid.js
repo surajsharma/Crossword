@@ -10,11 +10,37 @@ export default class Grid extends Component {
         super(props);
         this.state = {
             grid: [],
-            solvedGrid: [],
+            solvedWords: [],
+            words: [],
+            wordsLoaded: true,
             currentWord: null
         };
     }
 
+    componentDidUpdate() {
+        if (
+            this.state.wordsLoaded &&
+            this.props.data.numberOfWords === this.props.data.wordList.length
+        ) {
+            const words = this.props.data.wordList.map((word, index) => (
+                <Word
+                    number={index}
+                    word={word.word}
+                    x={word.x}
+                    y={word.y}
+                    orientation={word.orientation}
+                    key={Math.random()}
+                    onClick={this.handleWordClick}
+                    wordChange={this.handleWordChange}
+                />
+            ));
+
+            this.setState(
+                { wordsLoaded: false, words: words },
+                console.log(words)
+            );
+        }
+    }
     componentDidMount() {
         let width = this.props.data.width;
         let height = this.props.data.height;
@@ -27,6 +53,7 @@ export default class Grid extends Component {
                 );
             }
         }
+
         this.setState({ grid: newGrid });
     }
 
@@ -35,8 +62,14 @@ export default class Grid extends Component {
             .filter((f) => props[f] === true)
             .join(" ");
 
-    handleWordChange = () => {
-        console.log("handle word change");
+    handleWordChange = (word) => {
+        this.setState(
+            { solvedWords: this.state.solvedWords.concat(word) },
+            () => {
+                console.log(word);
+                this.props.addSolvedWord(this.state.solvedWords);
+            }
+        );
     };
 
     render() {
@@ -45,22 +78,6 @@ export default class Grid extends Component {
             (10 * this.props.data.width + 3) +
             " " +
             (10 * this.props.data.height + 3);
-
-        const words = this.props.data.wordList.map((word, index) => {
-            return (
-                <Word
-                    number={index}
-                    word={word.word}
-                    x={word.x}
-                    y={word.y}
-                    orientation={word.orientation}
-                    key={Math.random()}
-                    onClick={this.handleWordClick}
-                    wordChange={this.handleWordChange}
-                />
-            );
-        });
-
         return (
             <div>
                 <svg
@@ -73,7 +90,7 @@ export default class Grid extends Component {
                     })}
                 >
                     {this.state.grid}
-                    {words}
+                    {this.state.words}
                 </svg>
             </div>
         );

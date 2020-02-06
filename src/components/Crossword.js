@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Grid from "./Grid";
 import axios from "axios";
-
 import Swal from "sweetalert2";
 
 export default class Crossword extends Component {
@@ -13,7 +12,10 @@ export default class Crossword extends Component {
                 height: 13,
                 width: 13,
                 wordList: [],
-                clues: []
+                clues: [],
+                answers: [],
+                attempts: [],
+                numberOfWords: 0
             }
         };
     }
@@ -27,13 +29,15 @@ export default class Crossword extends Component {
             )
             .then((resp) => {
                 resp.data.wordList.forEach((word) => {
-                    this.setState({
+                    this.setState((prevState) => ({
                         data: {
                             ...data,
                             wordList: this.state.data.wordList.concat(word),
-                            clues: this.state.data.clues.concat(word.clue)
+                            clues: this.state.data.clues.concat(word.clue),
+                            numberOfWords: resp.data.wordList.length,
+                            answers: this.state.data.answers.concat(word.word)
                         }
-                    });
+                    }));
                 });
             })
             .catch((error) => {
@@ -41,15 +45,47 @@ export default class Crossword extends Component {
             });
     }
 
+    addSolvedWord = (word) => {
+        this.setState(
+            (prevState) => ({
+                data: { ...this.state.data, attempts: word }
+            }),
+            console.log("Added attempt ", word)
+        );
+    };
+
     checkAnswers = () => {
-        Swal.fire("Correct!");
+        const { attempts, answers } = this.state.data;
+        console.log(attempts, answers);
+        let score = 0;
+
+        if (attempts.length === answers.length) {
+            attempts.forEach((attempt, index) => {
+                if (answers.includes(attempts[index])) {
+                    score += 1;
+                }
+            });
+
+            if (score === answers.length) {
+                Swal.fire("Correct!");
+            } else {
+                Swal.fire("Incorrect!");
+            }
+        } else {
+            Swal.fire(
+                "Please answer all " + attempts.length + " of " + answers.length
+            );
+        }
     };
 
     render() {
         if (this.state.data.wordList.length > 0) {
             return (
                 <React.Fragment>
-                    <Grid data={this.state.data}></Grid>
+                    <Grid
+                        data={this.state.data}
+                        addSolvedWord={this.addSolvedWord}
+                    ></Grid>
                     {this.state.data.clues.map((clue) => {
                         return (
                             <li key={clue} onClick={this.handleClueClick}>
