@@ -14,7 +14,7 @@ export default class Grid extends Component {
         };
     }
 
-    populate() {
+    componentDidMount() {
         let width = this.props.data.width;
         let height = this.props.data.height;
         let newGrid = [];
@@ -27,10 +27,6 @@ export default class Grid extends Component {
             }
         }
         this.setState({ grid: newGrid });
-    }
-
-    componentDidMount() {
-        this.populate();
     }
 
     classNames = (props) =>
@@ -73,7 +69,7 @@ export default class Grid extends Component {
                     })}
                 >
                     {this.state.grid}
-                    {words.reverse()}
+                    {words}
                 </svg>
             </div>
         );

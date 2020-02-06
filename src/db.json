@@ -1,0 +1,32 @@
+{
+    "words": [
+        {
+            "id": 1,
+            "word": "Word",
+            "orientation": "down",
+            "x": 1,
+            "y": 1
+        },
+        {
+            "id": 2,
+            "word": "consolidate",
+            "orientation": "across",
+            "x": 1,
+            "y": 2
+        },
+        {
+            "id": 3,
+            "word": "shift",
+            "orientation": "down",
+            "x": 4,
+            "y": 2
+        },
+        {
+            "id": 4,
+            "word": "ice",
+            "orientation": "across",
+            "x": 4,
+            "y": 4
+        }
+    ]
+}
