@@ -6,25 +6,35 @@ export default class Cell extends Component {
         super(props);
         this.state = {
             editing: false,
+            wordEditing: props.wordEditing,
             inputVal: "",
             solved: false
         };
     }
 
     handleFocus = () => {
-        this.setState({ editing: !this.state.editing });
+        this.setState(
+            { editing: !this.state.editing },
+            this.props.onWordFocus()
+        );
     };
 
     handleBlur = () => {
         this.setState({ editing: !this.state.editing });
         if (this.props.value === "") {
-            this.setState({ value: this.props.value, solved: false });
+            this.setState(
+                { value: this.props.value, solved: false },
+                this.props.onWordUnfocus()
+            );
         }
     };
 
     handleChange = (e) => {
         if (e.target.value !== "") {
-            this.setState({ solved: true }, this.props.onClick(e.target.value));
+            this.setState(
+                { solved: true },
+                this.props.handleWordChange(e.target.value)
+            );
         }
     };
 
@@ -36,6 +46,10 @@ export default class Cell extends Component {
             : this.props.editing
             ? "rgb(200,200,0)"
             : "rgb(200, 200, 200)";
+
+        const wordEditing = this.props.wordEditing
+            ? "rgb(200,200,0)"
+            : "rgb(10, 10, 10)";
 
         const x =
             this.props.x === 1
@@ -79,7 +93,7 @@ export default class Cell extends Component {
                         width={10}
                         height={10}
                         style={{
-                            fill: style,
+                            fill: this.props.wordEditing ? wordEditing : style,
                             strokeWidth: "0.4px",
                             stroke: "black"
                         }}

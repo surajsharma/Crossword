@@ -30,7 +30,6 @@ export default class Grid extends Component {
                     y={word.y}
                     orientation={word.orientation}
                     key={Math.random()}
-                    onClick={this.handleWordClick}
                     wordChange={this.handleWordChange}
                 />
             ));
