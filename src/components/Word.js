@@ -9,8 +9,42 @@ export default class Word extends Component {
         this.state = {
             solution: this.props.word,
             solved: "",
-            editing: false
+            editing: false,
+            value: " ",
+            wcCalled: 0,
+            cells: []
         };
+    }
+
+    componentDidMount() {
+        let cells = [];
+        const splitWord = this.props.word.split("");
+
+        splitWord.forEach((element, index) => {
+            cells.push(
+                <React.Fragment key={Math.random()}>
+                    <Cell
+                        wordEditing={this.state.editing}
+                        orientation={this.props.orientation}
+                        number={index === 0 ? this.props.number + 1 : null}
+                        length={this.props.word.length}
+                        x={
+                            this.props.orientation === "across"
+                                ? this.props.x + index
+                                : this.props.x
+                        }
+                        y={
+                            this.props.orientation === "down"
+                                ? this.props.y + index
+                                : this.props.y
+                        }
+                        onWordChange={this.handleWordChange}
+                    />
+                </React.Fragment>
+            );
+        });
+
+        this.setState({ cells: cells });
     }
 
     componentDidUpdate() {
@@ -21,8 +55,19 @@ export default class Word extends Component {
 
     handleWordChange = (e) => {
         this.setState(
-            { solved: this.state.solved + e, editing: !this.state.editing },
-            () => console.log(e)
+            {
+                wcCalled: this.state.wcCalled + 1,
+                solved: this.state.solved + e
+            },
+            () => {
+                console.log(
+                    "word>hwc",
+                    e,
+                    "called= " + this.state.wcCalled,
+                    "solved= ",
+                    this.state.solved
+                );
+            }
         );
     };
 
@@ -35,32 +80,6 @@ export default class Word extends Component {
     };
 
     render() {
-        const splitWord = this.props.word.split("");
-
-        return splitWord.map((char, index) => {
-            return (
-                <React.Fragment key={Math.random()}>
-                    <Cell
-                        wordEditing={this.state.editing}
-                        orientation={this.props.orientation}
-                        number={index === 0 ? this.props.number + 1 : null}
-                        x={
-                            this.props.orientation === "across"
-                                ? this.props.x + index
-                                : this.props.x
-                        }
-                        y={
-                            this.props.orientation === "down"
-                                ? this.props.y + index
-                                : this.props.y
-                        }
-                        value={this.state.solved[index]}
-                        onWordChange={this.handleWordChange}
-                        onWordFocus={this.onWordFocus}
-                        onWordUnfocus={this.onWordUnfocus}
-                    />
-                </React.Fragment>
-            );
-        });
+        return this.state.cells;
     }
 }

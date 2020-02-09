@@ -8,15 +8,13 @@ export default class Cell extends Component {
             editing: false,
             wordEditing: props.wordEditing,
             inputVal: "",
-            solved: false
+            solved: false,
+            value: ""
         };
     }
 
     handleFocus = () => {
-        this.setState(
-            { editing: !this.state.editing },
-            this.props.onWordFocus()
-        );
+        this.setState({ editing: !this.state.editing });
     };
 
     handleBlur = () => {
@@ -32,10 +30,14 @@ export default class Cell extends Component {
     handleChange = (e) => {
         if (e.target.value !== "") {
             this.setState(
-                { solved: true },
-                this.props.handleWordChange(e.target.value)
+                {
+                    solved: true,
+                    value: e.target.value
+                },
+                console.log("cell>hwc")
             );
         }
+        this.props.onWordChange(e.target.value);
     };
 
     render() {
@@ -108,7 +110,7 @@ export default class Cell extends Component {
                         dominantBaseline="middle"
                         textAnchor="middle"
                     >
-                        {this.props.value}
+                        {this.state.value}
                     </text>
                 </g>
                 {this.props.value === "" ? null : input}
