@@ -9,7 +9,8 @@ export default class Cell extends Component {
             wordEditing: props.wordEditing,
             inputVal: "",
             solved: false,
-            value: ""
+            value: "",
+            wordSolved: false
         };
     }
 
@@ -28,16 +29,18 @@ export default class Cell extends Component {
     };
 
     handleChange = (e) => {
-        if (e.target.value !== "") {
+        let { index } = this.props;
+        let value = e.target.value;
+
+        if (value !== "") {
             this.setState(
                 {
                     solved: true,
-                    value: e.target.value
+                    value: value
                 },
-                console.log("cell>hwc")
+                this.props.onWordChange({ value, index })
             );
         }
-        this.props.onWordChange(e.target.value);
     };
 
     render() {

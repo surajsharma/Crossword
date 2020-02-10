@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import Cell from "./Cell";
 
-import swal from "sweetalert2";
+// import swal from "sweetalert2";
 
 export default class Word extends Component {
     constructor(props) {
         super(props);
         this.state = {
             solution: this.props.word,
-            solved: "",
+            solved: [],
             editing: false,
-            value: " ",
-            wcCalled: 0,
+            value: "",
+            tuples: [],
             cells: []
         };
     }
@@ -24,6 +24,8 @@ export default class Word extends Component {
             cells.push(
                 <React.Fragment key={Math.random()}>
                     <Cell
+                        index={index}
+                        word={this.props.word}
                         wordEditing={this.state.editing}
                         orientation={this.props.orientation}
                         number={index === 0 ? this.props.number + 1 : null}
@@ -49,34 +51,44 @@ export default class Word extends Component {
 
     componentDidUpdate() {
         if (this.state.solved.length === this.props.word.length) {
-            this.props.wordChange(this.state.solved);
+            console.log("scan word and add to solved here");
+
+            for (let i = 0; i < this.props.word.length; i++) {
+                console.log(this.state.solved[i]);
+            }
         }
     }
 
-    handleWordChange = (e) => {
-        this.setState(
-            {
-                wcCalled: this.state.wcCalled + 1,
-                solved: this.state.solved + e
-            },
-            () => {
-                console.log(
-                    "word>hwc",
-                    e,
-                    "called= " + this.state.wcCalled,
-                    "solved= ",
-                    this.state.solved
-                );
-            }
-        );
-    };
+    generateAndAddWord = () => {};
 
-    onWordFocus = () => {
-        this.setState({ editing: true });
-    };
+    handleWordChange = (tuple) => {
+        let { tuples, solution } = this.state;
+        let wordToSend = "";
 
-    onWordUnfocus = () => {
-        this.setState({ editing: false });
+        if (tuples.length < solution.length) {
+            console.log(tuple, tuples.length, solution.length);
+
+            this.setState({ tuples: [...tuples, tuple] }, () => {
+                if (tuples.length === solution.length - 1) {
+                    this.state.tuples.forEach((char, index) => {
+                        wordToSend += char.value;
+                    }, console.log("ready to send word"));
+                    this.props.wordChange(wordToSend);
+                }
+            });
+        } else {
+            var foundIndex = tuples.findIndex((x) => x.index === tuple.index);
+            const newTuple = { value: tuple.value, index: tuple.index };
+            let newTuples = tuples;
+            newTuples[foundIndex] = newTuple;
+
+            this.setState({ tuples: newTuples }, () => {
+                this.state.tuples.forEach((char, index) => {
+                    wordToSend += char.value;
+                }, console.log("ready to send word"));
+                this.props.wordChange(wordToSend);
+            });
+        }
     };
 
     render() {
