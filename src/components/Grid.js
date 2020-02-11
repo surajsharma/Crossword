@@ -61,14 +61,24 @@ export default class Grid extends Component {
             .filter((f) => props[f] === true)
             .join(" ");
 
-    handleWordChange = (word) => {
-        this.setState(
-            { solvedWords: this.state.solvedWords.concat(word) },
-            () => {
-                console.log(word);
-                this.props.addSolvedWord(this.state.solvedWords);
-            }
-        );
+    handleWordChange = (tuple) => {
+        console.log(tuple);
+        let { solvedWords } = this.state;
+        console.log("add this", tuple.wordToSend, tuple);
+
+        if (solvedWords.length !== 0) {
+            console.log(solvedWords[tuple.number]);
+            solvedWords[tuple.number] = tuple.wordToSend;
+            this.setState(
+                { solvedWords: solvedWords },
+                console.log("added to solved words = ", solvedWords)
+            );
+        } else {
+            this.setState(
+                { solvedWords: [...solvedWords, tuple.wordToSend] },
+                console.log("added to solved words = ", tuple.wordToSend)
+            );
+        }
     };
 
     render() {

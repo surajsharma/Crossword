@@ -29,7 +29,7 @@ export default class Cell extends Component {
     };
 
     handleChange = (e) => {
-        let { index } = this.props;
+        let { index, wordNum } = this.props;
         let value = e.target.value;
 
         if (value !== "") {
@@ -38,7 +38,7 @@ export default class Cell extends Component {
                     solved: true,
                     value: value
                 },
-                this.props.onWordChange({ value, index })
+                this.props.onWordChange({ value, index, wordNum })
             );
         }
     };

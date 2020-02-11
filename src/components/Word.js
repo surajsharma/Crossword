@@ -12,6 +12,7 @@ export default class Word extends Component {
             editing: false,
             value: "",
             tuples: [],
+            indices: [],
             cells: []
         };
     }
@@ -29,6 +30,7 @@ export default class Word extends Component {
                         wordEditing={this.state.editing}
                         orientation={this.props.orientation}
                         number={index === 0 ? this.props.number + 1 : null}
+                        wordNum={this.props.number}
                         length={this.props.word.length}
                         x={
                             this.props.orientation === "across"
@@ -59,35 +61,38 @@ export default class Word extends Component {
         }
     }
 
-    generateAndAddWord = () => {};
-
     handleWordChange = (tuple) => {
-        let { tuples, solution } = this.state;
+        let { tuples, solution, indices } = this.state;
+        let { number } = this.props;
         let wordToSend = "";
+        let allIndicesUnique = [...new Set(this.state.indices)];
 
-        if (tuples.length < solution.length) {
-            console.log(tuple, tuples.length, solution.length);
-
-            this.setState({ tuples: [...tuples, tuple] }, () => {
-                if (tuples.length === solution.length - 1) {
-                    this.state.tuples.forEach((char, index) => {
-                        wordToSend += char.value;
-                    }, console.log("ready to send word"));
-                    this.props.wordChange(wordToSend);
-                }
-            });
-        } else {
-            var foundIndex = tuples.findIndex((x) => x.index === tuple.index);
-            const newTuple = { value: tuple.value, index: tuple.index };
-            let newTuples = tuples;
-            newTuples[foundIndex] = newTuple;
-
-            this.setState({ tuples: newTuples }, () => {
-                this.state.tuples.forEach((char, index) => {
-                    wordToSend += char.value;
-                }, console.log("ready to send word"));
-                this.props.wordChange(wordToSend);
-            });
+        // IF TUPLE.INDEX IS NON EMPTY, CHANGE IT (EDIT STATE.TUPLE)
+        tuples.forEach((index) => {
+            console.log(
+                allIndicesUnique.length,
+                solution.length,
+                tuples[index],
+                this.state.indices.indexOf(tuple.index)
+            );
+        });
+        if (this.state.indices.indexOf(tuple.index) === -1)
+            this.setState(
+                {
+                    tuples: [...tuples, tuple],
+                    indices: [...indices, tuple.index]
+                },
+                console.log(tuple)
+            );
+        else {
+            console.log(
+                `replacing ${tuples[tuple.index].value} with ${tuple.value}`
+            );
+            tuples[tuple.index].value = tuple.value;
+            this.setState(
+                { tuples: tuples }
+                // console.log("index edited", tuples[tuple.index])
+            );
         }
     };
 
