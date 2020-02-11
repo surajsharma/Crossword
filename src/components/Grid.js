@@ -40,6 +40,7 @@ export default class Grid extends Component {
             );
         }
     }
+
     componentDidMount() {
         let width = this.props.data.width;
         let height = this.props.data.height;
@@ -62,21 +63,31 @@ export default class Grid extends Component {
             .join(" ");
 
     handleWordChange = (tuple) => {
-        console.log(tuple);
         let { solvedWords } = this.state;
-        console.log("add this", tuple.wordToSend, tuple);
 
         if (solvedWords.length !== 0) {
-            console.log(solvedWords[tuple.number]);
-            solvedWords[tuple.number] = tuple.wordToSend;
-            this.setState(
-                { solvedWords: solvedWords },
-                console.log("added to solved words = ", solvedWords)
-            );
+            if (solvedWords[tuple.number]) {
+                solvedWords[tuple.number] = tuple.value;
+                this.setState({ solvedWords: solvedWords }, () => {
+                    console.log(solvedWords);
+                    this.props.addSolvedWord(this.state.solvedWords);
+                });
+            } else {
+                this.setState(
+                    { solvedWords: [...solvedWords, tuple.value] },
+                    () => {
+                        console.log("added to solved words = ", tuple.value);
+                        this.props.addSolvedWord(this.state.solvedWords);
+                    }
+                );
+            }
         } else {
             this.setState(
-                { solvedWords: [...solvedWords, tuple.wordToSend] },
-                console.log("added to solved words = ", tuple.wordToSend)
+                { solvedWords: [...solvedWords, tuple.value] },
+                () => {
+                    console.log("added to solved words = ", tuple.value);
+                    this.props.addSolvedWord(this.state.solvedWords);
+                }
             );
         }
     };

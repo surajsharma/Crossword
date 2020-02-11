@@ -52,46 +52,39 @@ export default class Word extends Component {
     }
 
     componentDidUpdate() {
-        if (this.state.solved.length === this.props.word.length) {
-            console.log("scan word and add to solved here");
-
-            for (let i = 0; i < this.props.word.length; i++) {
-                console.log(this.state.solved[i]);
-            }
+        const { solved, solution } = this.state;
+        if (this.state.solved.length === solution.length) {
+            this.props.wordChange({
+                value: solved.join(""),
+                number: this.props.number
+            });
         }
     }
 
     handleWordChange = (tuple) => {
-        let { tuples, solution, indices } = this.state;
-        let { number } = this.props;
-        let wordToSend = "";
-        let allIndicesUnique = [...new Set(this.state.indices)];
+        let { tuples, indices, solved } = this.state;
 
-        // IF TUPLE.INDEX IS NON EMPTY, CHANGE IT (EDIT STATE.TUPLE)
-        tuples.forEach((index) => {
-            console.log(
-                allIndicesUnique.length,
-                solution.length,
-                tuples[index],
-                this.state.indices.indexOf(tuple.index)
-            );
-        });
-        if (this.state.indices.indexOf(tuple.index) === -1)
+        if (this.state.indices.indexOf(tuple.index) === -1) {
+            // console.log(this.state.tuples.length, solution.length);
             this.setState(
                 {
                     tuples: [...tuples, tuple],
                     indices: [...indices, tuple.index]
                 },
-                console.log(tuple)
+                this.setState({ solved: [...solved, tuple.value] })
             );
-        else {
-            console.log(
-                `replacing ${tuples[tuple.index].value} with ${tuple.value}`
-            );
+        } else {
+            // console.log(this.state.tuples.length, solution.length);
+            // console.log(
+            //     `replacing ${tuples[tuple.index].value} with ${tuple.value}`
+            // );
+
             tuples[tuple.index].value = tuple.value;
+            solved[tuple.index] = tuple.value;
+
             this.setState(
-                { tuples: tuples }
-                // console.log("index edited", tuples[tuple.index])
+                { tuples: tuples, solved: solved },
+                console.log("index edited", tuples[tuple.index])
             );
         }
     };

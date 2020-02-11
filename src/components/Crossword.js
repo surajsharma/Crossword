@@ -46,6 +46,7 @@ export default class Crossword extends Component {
     }
 
     addSolvedWord = (word) => {
+        console.log("here ", word);
         this.setState(
             (prevState) => ({
                 data: { ...this.state.data, attempts: word }
