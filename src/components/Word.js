@@ -43,6 +43,7 @@ export default class Word extends Component {
                         onWordChange={this.handleWordChange}
                         refer={this.props.refer}
                         id={this.props.word}
+                        addToRefs={this.props.addToRefs}
                     />
                 </React.Fragment>
             );
@@ -60,6 +61,10 @@ export default class Word extends Component {
             });
         }
     }
+
+    addToRefs = (ref) => {
+        this.props.addToRefs(ref);
+    };
 
     handleWordChange = (tuple) => {
         let { tuples, indices, solved } = this.state;

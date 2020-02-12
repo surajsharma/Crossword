@@ -6,7 +6,6 @@ import Swal from "sweetalert2";
 export default class Crossword extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             data: {
                 height: 13,
@@ -23,7 +22,6 @@ export default class Crossword extends Component {
 
     componentDidMount() {
         const { data } = this.state;
-
         axios
             .get(
                 "https://www.staging.socratease.in/api/crossword/crossword-id/2"
@@ -36,8 +34,7 @@ export default class Crossword extends Component {
                             wordList: this.state.data.wordList.concat(word),
                             clues: this.state.data.clues.concat(word.clue),
                             numberOfWords: resp.data.wordList.length,
-                            answers: this.state.data.answers.concat(word.word),
-                            refs: this.state.data.refs.concat(React.createRef())
+                            answers: this.state.data.answers.concat(word.word)
                         }
                     }));
                 });
@@ -82,8 +79,26 @@ export default class Crossword extends Component {
     };
 
     handleClueClick = (e, index) => {
-        this.state.data.refs[index].current.focus();
-        console.log(this.state.data.refs);
+        let startingCell = 0;
+
+        for (let i = 0; i < index; i++) {
+            startingCell =
+                index === 0
+                    ? 0
+                    : (startingCell += this.state.data.wordList[i].word.length);
+        }
+
+        this.state.data.refs[startingCell].current.focus();
+    };
+
+    addToRefs = (ref) => {
+        const { data } = this.state;
+        this.setState((prevState) => ({
+            data: {
+                ...data,
+                refs: prevState.data.refs.concat(ref)
+            }
+        }));
     };
 
     render() {
@@ -93,6 +108,7 @@ export default class Crossword extends Component {
                     <Grid
                         data={this.state.data}
                         addSolvedWord={this.addSolvedWord}
+                        addToRefs={this.addToRefs}
                     ></Grid>
                     {this.state.data.clues.map((clue, index) => {
                         return (

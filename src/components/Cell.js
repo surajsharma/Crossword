@@ -16,6 +16,12 @@ export default class Cell extends Component {
         this.cellRef = React.createRef();
     }
 
+    componentDidMount() {
+        if (typeof this.props.addToRefs === "function") {
+            this.props.addToRefs(this.cellRef);
+        }
+    }
+
     handleFocus = () => {
         this.setState({ editing: !this.state.editing });
     };
@@ -87,8 +93,7 @@ export default class Cell extends Component {
                             this.state.editing ? "input current" : "input"
                         }
                         maxLength="1"
-                        ref={this.props.index === 0 ? this.props.refer : null}
-                        id={this.props.index + this.props.word}
+                        ref={this.cellRef}
                     />
                 </div>
             </foreignObject>

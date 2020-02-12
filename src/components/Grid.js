@@ -31,13 +31,11 @@ export default class Grid extends Component {
                     orientation={word.orientation}
                     key={Math.random()}
                     wordChange={this.handleWordChange}
+                    addToRefs={this.props.addToRefs}
                 />
             ));
 
-            this.setState(
-                { wordsLoaded: false, words: words },
-                console.log("")
-            );
+            this.setState({ wordsLoaded: false, words: words });
         }
     }
 
