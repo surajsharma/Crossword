@@ -15,7 +15,8 @@ export default class Crossword extends Component {
                 clues: [],
                 answers: [],
                 attempts: [],
-                numberOfWords: 0
+                numberOfWords: 0,
+                refs: []
             }
         };
     }
@@ -35,7 +36,8 @@ export default class Crossword extends Component {
                             wordList: this.state.data.wordList.concat(word),
                             clues: this.state.data.clues.concat(word.clue),
                             numberOfWords: resp.data.wordList.length,
-                            answers: this.state.data.answers.concat(word.word)
+                            answers: this.state.data.answers.concat(word.word),
+                            refs: this.state.data.refs.concat(React.createRef())
                         }
                     }));
                 });
@@ -79,6 +81,11 @@ export default class Crossword extends Component {
         }
     };
 
+    handleClueClick = (e, index) => {
+        this.state.data.refs[index].current.focus();
+        console.log(this.state.data.refs);
+    };
+
     render() {
         if (this.state.data.wordList.length > 0) {
             return (
@@ -87,11 +94,17 @@ export default class Crossword extends Component {
                         data={this.state.data}
                         addSolvedWord={this.addSolvedWord}
                     ></Grid>
-                    {this.state.data.clues.map((clue) => {
+                    {this.state.data.clues.map((clue, index) => {
                         return (
-                            <li key={clue} onClick={this.handleClueClick}>
-                                {clue}
-                            </li>
+                            <div className="clue" key={clue}>
+                                <li
+                                    onClick={(e) =>
+                                        this.handleClueClick(e, index)
+                                    }
+                                >
+                                    {clue}
+                                </li>
+                            </div>
                         );
                     })}
                     <button onClick={this.checkAnswers}>Check answers</button>

@@ -12,6 +12,8 @@ export default class Cell extends Component {
             value: "",
             wordSolved: false
         };
+
+        this.cellRef = React.createRef();
     }
 
     handleFocus = () => {
@@ -76,7 +78,7 @@ export default class Cell extends Component {
             >
                 <div>
                     <input
-                        ref={this.props.value}
+                        type="text"
                         onFocus={this.handleFocus}
                         onBlur={this.handleBlur}
                         onChange={this.handleChange}
@@ -85,6 +87,8 @@ export default class Cell extends Component {
                             this.state.editing ? "input current" : "input"
                         }
                         maxLength="1"
+                        ref={this.props.index === 0 ? this.props.refer : null}
+                        id={this.props.index + this.props.word}
                     />
                 </div>
             </foreignObject>

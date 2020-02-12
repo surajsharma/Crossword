@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Cell from "./Cell";
 import "../styles/cell.css";
-
 import Word from "./Word";
 
 //use content loader
@@ -24,6 +23,7 @@ export default class Grid extends Component {
         ) {
             const words = this.props.data.wordList.map((word, index) => (
                 <Word
+                    refer={this.props.data.refs[index]}
                     number={index}
                     word={word.word}
                     x={word.x}
@@ -36,7 +36,7 @@ export default class Grid extends Component {
 
             this.setState(
                 { wordsLoaded: false, words: words },
-                console.log(words)
+                console.log("")
             );
         }
     }

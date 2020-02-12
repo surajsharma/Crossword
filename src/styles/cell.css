@@ -35,3 +35,13 @@
 .cell {
     border: 1px solid red;
 }
+
+.clue {
+    padding: 5px;
+}
+
+.clue:hover {
+    background-color: blue;
+    color: white;
+    cursor: pointer;
+}
