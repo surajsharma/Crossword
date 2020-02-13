@@ -21,7 +21,7 @@ export default class Word extends Component {
 
         splitWord.forEach((element, index) => {
             cells.push(
-                <React.Fragment key={Math.random()}>
+                <React.Fragment key={this.props.word + index}>
                     <Cell
                         index={index}
                         word={this.props.word}
@@ -44,6 +44,8 @@ export default class Word extends Component {
                         refer={this.props.refer}
                         id={this.props.word}
                         addToRefs={this.props.addToRefs}
+                        moveToNextCell={this.props.moveToNextCell}
+                        changeActiveCell={this.props.changeActiveCell}
                     />
                 </React.Fragment>
             );

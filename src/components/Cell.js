@@ -16,6 +16,11 @@ export default class Cell extends Component {
         this.cellRef = React.createRef();
     }
 
+    componentDidUpdate() {
+        if (this.state.value !== "") {
+        }
+    }
+
     componentDidMount() {
         if (typeof this.props.addToRefs === "function") {
             this.props.addToRefs(this.cellRef);
@@ -24,14 +29,18 @@ export default class Cell extends Component {
 
     handleFocus = () => {
         this.setState({ editing: !this.state.editing });
+        this.props.changeActiveCell({
+            index: this.props.index,
+            wordNum: this.props.wordNum
+        });
     };
 
     handleBlur = () => {
         this.setState({ editing: !this.state.editing });
         if (this.props.value === "") {
             this.setState(
-                { value: this.props.value, solved: false },
-                this.props.onWordUnfocus()
+                { value: this.props.value, solved: false }
+                // this.props.onWordUnfocus()
             );
         }
     };
@@ -49,6 +58,7 @@ export default class Cell extends Component {
                 this.props.onWordChange({ value, index, wordNum })
             );
         }
+        this.props.moveToNextCell();
     };
 
     render() {

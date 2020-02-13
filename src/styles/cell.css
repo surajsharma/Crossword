@@ -1,3 +1,8 @@
+.grid_container {
+    height: 70vh;
+    margin: 0 auto;
+    text-align: center;
+}
 .crossword__grid {
     background-color: lightgrey;
     /*use a variable*/

@@ -32,6 +32,8 @@ export default class Grid extends Component {
                     key={Math.random()}
                     wordChange={this.handleWordChange}
                     addToRefs={this.props.addToRefs}
+                    moveToNextCell={this.props.moveToNextCell}
+                    changeActiveCell={this.props.changeActiveCell}
                 />
             ));
 
@@ -93,20 +95,12 @@ export default class Grid extends Component {
     render() {
         const dim =
             "0 0 " +
-            (10 * this.props.data.width + 3) +
+            (13 * this.props.data.width + 3) +
             " " +
-            (10 * this.props.data.height + 3);
+            (13 * this.props.data.height + 3);
         return (
-            <div>
-                <svg
-                    viewBox={dim}
-                    xmlns="http://www.w3.org/2000/svg"
-                    className={this.classNames({
-                        crossword__grid: true
-                        // "crossword__grid--focussed": !! props.focussedCell
-                        // How did props get here?
-                    })}
-                >
+            <div className="grid_container">
+                <svg viewBox={dim} xmlns="http://www.w3.org/2000/svg">
                     {this.state.grid}
                     {this.state.words}
                 </svg>

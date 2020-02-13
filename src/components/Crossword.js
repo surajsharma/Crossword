@@ -15,7 +15,9 @@ export default class Crossword extends Component {
                 answers: [],
                 attempts: [],
                 numberOfWords: 0,
-                refs: []
+                refs: [],
+                currentFocus: 0,
+                currentWord: 0
             }
         };
     }
@@ -56,7 +58,8 @@ export default class Crossword extends Component {
 
     checkAnswers = () => {
         const { attempts, answers } = this.state.data;
-        console.log(attempts, answers);
+
+        // console.log(attempts, answers);
         let score = 0;
 
         if (attempts.length === answers.length) {
@@ -78,6 +81,11 @@ export default class Crossword extends Component {
         }
     };
 
+    clearEverything = () => {
+        console.log("clear everything and rerender from scratch");
+        // this.setState({ data: null });
+    };
+
     handleClueClick = (e, index) => {
         let startingCell = 0;
 
@@ -88,7 +96,75 @@ export default class Crossword extends Component {
                     : (startingCell += this.state.data.wordList[i].word.length);
         }
 
-        this.state.data.refs[startingCell].current.focus();
+        this.setState(
+            { currentFocus: startingCell },
+            this.state.data.refs[startingCell].current.focus()
+        );
+    };
+
+    moveToNextCell = (backwards) => {
+        //all the cell change logic is in changeActiveCell
+        //here we will just call changeActiveCell with parameters in a
+        //loop
+
+        const { currentWord, currentFocus } = this.state.data;
+        let nextCell = 0,
+            nextWord = 0,
+            curWordLength = this.state.data.wordList[currentWord].length;
+
+        if (currentFocus < curWordLength) {
+            console.log("move to next cell", currentWord, currentFocus);
+        }
+
+        // this.changeActiveCell({ index: 0, wordNum: 0 });
+
+        // let { currentFocus } = this.state.data;
+        // if (this.state.data.currentFocus < this.state.data.refs.length - 1) {
+        //     console.log(
+        //         this.state.data.currentFocus,
+        //         this.state.data.refs.length
+        //     );
+
+        //     const nextCell = (this.state.data.currentFocus += 1);
+
+        //     this.setState(
+        //         { currentFocus: nextCell },
+        //         this.state.data.refs[nextCell].current.focus()
+        //     );
+        // } else {
+        //     this.setState({ currentFocus: 0 });
+        // }
+    };
+
+    changeActiveCell = (activeCell) => {
+        // activeCell = {index: 0, wordNum: 0}
+
+        // console.log(
+        //     "changeActiveCell",
+        //     activeCell,
+        //     this.state.data.currentWord
+        // );
+
+        let newActiveCell = 0,
+            allPrevWords = 0,
+            allCurWordChars = activeCell.index;
+
+        for (let i = 0; i < activeCell.wordNum; i++) {
+            allPrevWords += this.state.data.wordList[i].length;
+        }
+
+        newActiveCell = allPrevWords + allCurWordChars;
+
+        this.setState(
+            (prevState) => ({
+                data: {
+                    ...this.state.data,
+                    currentFocus: newActiveCell,
+                    currentWord: activeCell.wordNum
+                }
+            }),
+            console.log("currentFocus ", newActiveCell)
+        );
     };
 
     addToRefs = (ref) => {
@@ -109,6 +185,8 @@ export default class Crossword extends Component {
                         data={this.state.data}
                         addSolvedWord={this.addSolvedWord}
                         addToRefs={this.addToRefs}
+                        moveToNextCell={this.moveToNextCell}
+                        changeActiveCell={this.changeActiveCell}
                     ></Grid>
                     {this.state.data.clues.map((clue, index) => {
                         return (
@@ -124,6 +202,7 @@ export default class Crossword extends Component {
                         );
                     })}
                     <button onClick={this.checkAnswers}>Check answers</button>
+                    <button onClick={this.clearEverything}>Clear</button>
                 </React.Fragment>
             );
         } else {
