@@ -107,13 +107,40 @@ export default class Crossword extends Component {
         //here we will just call changeActiveCell with parameters in a
         //loop
 
-        const { currentWord, currentFocus } = this.state.data;
+        const { currentWord, currentFocus, refs } = this.state.data;
         let nextCell = 0,
             nextWord = 0,
-            curWordLength = this.state.data.wordList[currentWord].length;
+            curWordLength = this.state.data.wordList[currentWord].length,
+            allPrevWords = 0;
 
-        if (currentFocus < curWordLength) {
-            console.log("move to next cell", currentWord, currentFocus);
+        // let newActiveCell = 0,
+        //     allCurWordChars = activeCell.index;
+
+        for (let i = 0; i < currentWord; i++) {
+            allPrevWords += this.state.data.wordList[i].length;
+        }
+
+        console.log(
+            "move to next cell",
+            currentWord,
+            currentFocus,
+            allPrevWords,
+            nextCell
+        );
+
+        if (currentFocus < refs.length - 1) {
+            nextCell = currentFocus + 1;
+
+            this.setState(
+                { currentFocus: nextCell },
+                this.state.data.refs[nextCell].current.focus()
+            );
+        } else {
+            nextCell = 0;
+            this.setState(
+                { currentFocus: nextCell },
+                this.state.data.refs[nextCell].current.focus()
+            );
         }
 
         // this.changeActiveCell({ index: 0, wordNum: 0 });

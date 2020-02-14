@@ -69,6 +69,7 @@ export default class Word extends Component {
     };
 
     handleWordChange = (tuple) => {
+        console.log(tuple);
         let { tuples, indices, solved } = this.state;
         if (this.state.indices.indexOf(tuple.index) === -1) {
             this.setState(
@@ -76,7 +77,9 @@ export default class Word extends Component {
                     tuples: [...tuples, tuple],
                     indices: [...indices, tuple.index]
                 },
-                this.setState({ solved: [...solved, tuple.value] })
+                this.setState({
+                    solved: [...solved, tuple.value]
+                })
             );
         } else {
             tuples[tuple.index].value = tuple.value;
@@ -86,6 +89,7 @@ export default class Word extends Component {
                 console.log("index edited", tuples[tuple.index])
             );
         }
+        this.props.moveToNextCell();
     };
 
     render() {

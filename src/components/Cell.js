@@ -58,7 +58,7 @@ export default class Cell extends Component {
                 this.props.onWordChange({ value, index, wordNum })
             );
         }
-        this.props.moveToNextCell();
+        // this.props.moveToNextCell();
     };
 
     render() {
