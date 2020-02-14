@@ -63,13 +63,31 @@ export default class Grid extends Component {
             .join(" ");
 
     handleWordChange = (tuple) => {
+        tuple.value.forEach((value) => console.log(value));
+        // console.log("grid handleWordChange", tuple.value);
+
+        //the incoming tuple is an array, needs sorting by tuple.index
+
+        // let sortable = [];
+
+        // for (let index in tuple) {
+        //     // sortable.push([tuple.value]);
+        //     console.log(tuple[index].value);
+        // }
+
+        // console.log("grid handleWordChange", sortable);
+
+        // sortable.sort(function(a, b) {
+        //     return a[1] - b[1];
+        // });
+
         let { solvedWords } = this.state;
 
         if (solvedWords.length !== 0) {
             if (solvedWords[tuple.number]) {
                 solvedWords[tuple.number] = tuple.value;
                 this.setState({ solvedWords: solvedWords }, () => {
-                    console.log(solvedWords);
+                    console.log("handleWordChange", solvedWords);
                     this.props.addSolvedWord(this.state.solvedWords);
                 });
             } else {

@@ -11,6 +11,7 @@ export default class Word extends Component {
             value: "",
             tuples: [],
             indices: [],
+
             cells: []
         };
     }
@@ -58,7 +59,7 @@ export default class Word extends Component {
         const { solved, solution } = this.state;
         if (this.state.solved.length === solution.length) {
             this.props.wordChange({
-                value: solved.join(""),
+                value: solved,
                 number: this.props.number
             });
         }
@@ -69,24 +70,28 @@ export default class Word extends Component {
     };
 
     handleWordChange = (tuple) => {
-        console.log(tuple);
+        // console.log("word handleWordChange", tuple);
         let { tuples, indices, solved } = this.state;
+
         if (this.state.indices.indexOf(tuple.index) === -1) {
+            //if incoming indice is empty
             this.setState(
                 {
                     tuples: [...tuples, tuple],
                     indices: [...indices, tuple.index]
                 },
                 this.setState({
-                    solved: [...solved, tuple.value]
+                    solved: [...solved, tuple]
                 })
             );
         } else {
-            tuples[tuple.index].value = tuple.value;
-            solved[tuple.index] = tuple.value;
+            let edit = tuples.findIndex((x) => x.index === tuple.index);
+
+            tuples[edit].value = tuple.value;
+            solved[edit] = tuple;
             this.setState(
                 { tuples: tuples, solved: solved },
-                console.log("index edited", tuples[tuple.index])
+                console.log("index edited", tuples[edit])
             );
         }
         this.props.moveToNextCell();

@@ -47,7 +47,7 @@ export default class Crossword extends Component {
     }
 
     addSolvedWord = (word) => {
-        console.log("here ", word);
+        console.log("addSolvedWord", word);
         this.setState(
             (prevState) => ({
                 data: { ...this.state.data, attempts: word }
@@ -107,29 +107,23 @@ export default class Crossword extends Component {
         //here we will just call changeActiveCell with parameters in a
         //loop
 
-        const { currentWord, currentFocus, refs } = this.state.data;
-        let nextCell = 0,
-            nextWord = 0,
-            curWordLength = this.state.data.wordList[currentWord].length,
-            allPrevWords = 0;
+        const { currentFocus, refs } = this.state.data;
+        let nextCell = 0;
 
-        // let newActiveCell = 0,
-        //     allCurWordChars = activeCell.index;
-
-        for (let i = 0; i < currentWord; i++) {
-            allPrevWords += this.state.data.wordList[i].length;
-        }
-
-        console.log(
-            "move to next cell",
-            currentWord,
-            currentFocus,
-            allPrevWords,
-            nextCell
-        );
+        // console.log(
+        //     "move to next cell",
+        //     currentWord,
+        //     currentFocus,
+        //     allPrevWords,
+        //     nextCell
+        // );
 
         if (currentFocus < refs.length - 1) {
-            nextCell = currentFocus + 1;
+            if (backwards) {
+                nextCell = currentFocus - 1 || 0;
+            } else {
+                nextCell = currentFocus + 1;
+            }
 
             this.setState(
                 { currentFocus: nextCell },
@@ -142,25 +136,6 @@ export default class Crossword extends Component {
                 this.state.data.refs[nextCell].current.focus()
             );
         }
-
-        // this.changeActiveCell({ index: 0, wordNum: 0 });
-
-        // let { currentFocus } = this.state.data;
-        // if (this.state.data.currentFocus < this.state.data.refs.length - 1) {
-        //     console.log(
-        //         this.state.data.currentFocus,
-        //         this.state.data.refs.length
-        //     );
-
-        //     const nextCell = (this.state.data.currentFocus += 1);
-
-        //     this.setState(
-        //         { currentFocus: nextCell },
-        //         this.state.data.refs[nextCell].current.focus()
-        //     );
-        // } else {
-        //     this.setState({ currentFocus: 0 });
-        // }
     };
 
     changeActiveCell = (activeCell) => {
