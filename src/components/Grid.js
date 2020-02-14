@@ -64,6 +64,10 @@ export default class Grid extends Component {
 
     handleWordChange = (tuple) => {
         //the incoming tuple is an array, needs sorting by tuple.index
+
+        //the adding to solvedWords approach should be changed
+        //instead of adding any change, modify word in-situ by location
+
         let sorted = tuple.value.slice(0);
         let word = "";
 
@@ -72,28 +76,38 @@ export default class Grid extends Component {
         });
 
         sorted.forEach((e) => (word += e.value));
-
         let { solvedWords } = this.state;
 
-        if (solvedWords.length !== 0) {
-            if (solvedWords[tuple.number]) {
-                solvedWords[tuple.number] = word;
-                this.setState({ solvedWords: solvedWords }, () => {
-                    console.log("handleWordChange", solvedWords);
-                    this.props.addSolvedWord(this.state.solvedWords);
-                });
-            } else {
-                this.setState({ solvedWords: [...solvedWords, word] }, () => {
-                    console.log("added to solved words = ", word);
-                    this.props.addSolvedWord(this.state.solvedWords);
-                });
-            }
-        } else {
-            this.setState({ solvedWords: [...solvedWords, word] }, () => {
-                console.log("added to solved words = ", word);
-                this.props.addSolvedWord(this.state.solvedWords);
-            });
-        }
+        console.log("GhandleWordChange", solvedWords, tuple.value);
+
+        // if (solvedWords.length !== 0) {
+        //     if (solvedWords[tuple.number]) {
+        //         solvedWords[tuple.number] = word;
+        //         this.setState({ solvedWords: solvedWords }, () => {
+        //             console.log("handleWordChange", solvedWords);
+        //             this.props.addSolvedWord({
+        //                 words: this.state.solvedWords,
+        //                 number: tuple.number
+        //             });
+        //         });
+        //     } else {
+        //         this.setState({ solvedWords: [...solvedWords, word] }, () => {
+        //             console.log("added to solved words = ", word);
+        //             this.props.addSolvedWord({
+        //                 words: this.state.solvedWords,
+        //                 number: tuple.number
+        //             });
+        //         });
+        //     }
+        // } else {
+        //     this.setState({ solvedWords: [...solvedWords, word] }, () => {
+        //         console.log("added to solved words = ", word);
+        //         this.props.addSolvedWord({
+        //             words: this.state.solvedWords,
+        //             number: tuple.number
+        //         });
+        //     });
+        // }
     };
 
     render() {

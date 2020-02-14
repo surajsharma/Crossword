@@ -46,14 +46,48 @@ export default class Crossword extends Component {
             });
     }
 
-    addSolvedWord = (word) => {
-        console.log("addSolvedWord", word);
-        this.setState(
-            (prevState) => ({
-                data: { ...this.state.data, attempts: word }
-            }),
-            console.log("Added attempt ", word)
-        );
+    addSolvedWord = (tuple) => {
+        // console.log(
+        //     tuple.number,
+        //     tuple.words[tuple.number]
+        //         ? tuple.words[tuple.number]
+        //         : tuple.words[0],
+        //     tuple.words.length,
+        //     tuple
+        // );
+
+        let wordToAdd = tuple.words[tuple.number]
+            ? tuple.words[tuple.number]
+            : tuple.words[0];
+
+        console.log("CWaddSolvedWord", {
+            word: wordToAdd,
+            number: tuple.number
+        });
+
+        // if (tuple.words.length === 1) {
+        //     console.log(tuple.number, tuple.words[0], tuple.words.length);
+        // } else {
+        //     console.log(tuple.number, tuple.words, tuple.words.length);
+        // }
+
+        //scan this.state.data.attempts to see if
+        //the present index is taken, if yes, edit the word else insert
+
+        // let wordToAdd = {
+        //     word: tuple.words[tuple.number] || tuple.words[0],
+        //     number: tuple.number
+        // };
+
+        // this.setState(
+        //     (prevState) => ({
+        //         data: {
+        //             ...this.state.data,
+        //             attempts: [...this.state.data.attempts, wordToAdd]
+        //         }
+        //     }),
+        //     console.log("Added attempt ", wordToAdd)
+        // );
     };
 
     checkAnswers = () => {
