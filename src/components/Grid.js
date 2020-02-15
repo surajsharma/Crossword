@@ -76,40 +76,9 @@ export default class Grid extends Component {
         });
 
         sorted.forEach((e) => (word += e.value));
-        let { solvedWords } = this.state;
-
-        console.log("GhandleWordChange", tuple.number, word);
+        // console.log("GhandleWordChange", tuple.number, word);
 
         this.props.addSolvedWord({ word: word, number: tuple.number });
-
-        // if (solvedWords.length !== 0) {
-        //     if (solvedWords[tuple.number]) {
-        //         solvedWords[tuple.number] = word;
-        //         this.setState({ solvedWords: solvedWords }, () => {
-        //             console.log("handleWordChange", solvedWords);
-        //             this.props.addSolvedWord({
-        //                 words: this.state.solvedWords,
-        //                 number: tuple.number
-        //             });
-        //         });
-        //     } else {
-        //         this.setState({ solvedWords: [...solvedWords, word] }, () => {
-        //             console.log("added to solved words = ", word);
-        //             this.props.addSolvedWord({
-        //                 words: this.state.solvedWords,
-        //                 number: tuple.number
-        //             });
-        //         });
-        //     }
-        // } else {
-        //     this.setState({ solvedWords: [...solvedWords, word] }, () => {
-        //         console.log("added to solved words = ", word);
-        //         this.props.addSolvedWord({
-        //             words: this.state.solvedWords,
-        //             number: tuple.number
-        //         });
-        //     });
-        // }
     };
 
     render() {

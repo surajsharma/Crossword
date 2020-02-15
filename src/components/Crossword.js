@@ -76,13 +76,14 @@ export default class Crossword extends Component {
 
     checkAnswers = () => {
         const { attempts, answers } = this.state.data;
-
-        // console.log(attempts, answers);
         let score = 0;
 
         if (attempts.length === answers.length) {
             attempts.forEach((attempt, index) => {
-                if (answers.includes(attempts[index])) {
+                if (
+                    answers.includes(attempts[index].word) &&
+                    answers[index] === attempt.word
+                ) {
                     score += 1;
                 }
             });
