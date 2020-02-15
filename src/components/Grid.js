@@ -78,7 +78,9 @@ export default class Grid extends Component {
         sorted.forEach((e) => (word += e.value));
         let { solvedWords } = this.state;
 
-        console.log("GhandleWordChange", solvedWords, tuple.value);
+        console.log("GhandleWordChange", tuple.number, word);
+
+        this.props.addSolvedWord({ word: word, number: tuple.number });
 
         // if (solvedWords.length !== 0) {
         //     if (solvedWords[tuple.number]) {
