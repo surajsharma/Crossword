@@ -17,13 +17,14 @@ export default class Crossword extends Component {
                 numberOfWords: 0,
                 refs: [],
                 currentFocus: 0,
-                currentWord: 0
+                currentWord: null
             }
         };
     }
 
     componentDidMount() {
         const { data } = this.state;
+
         axios
             .get(
                 "https://www.staging.socratease.in/api/crossword/crossword-id/2"
@@ -208,10 +209,18 @@ export default class Crossword extends Component {
                         addToRefs={this.addToRefs}
                         moveToNextCell={this.moveToNextCell}
                         changeActiveCell={this.changeActiveCell}
+                        currentWord={this.state.data.currentWord}
                     ></Grid>
                     {this.state.data.clues.map((clue, index) => {
                         return (
-                            <div className="clue" key={clue}>
+                            <div
+                                className={
+                                    this.state.data.currentWord === index
+                                        ? "clue editing"
+                                        : "clue "
+                                }
+                                key={clue}
+                            >
                                 <li
                                     onClick={(e) =>
                                         this.handleClueClick(e, index)

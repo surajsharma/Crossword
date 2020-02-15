@@ -1,5 +1,4 @@
 .grid_container {
-    height: 70vh;
     margin: 0 auto;
     text-align: center;
 }
@@ -49,4 +48,8 @@
     background-color: blue;
     color: white;
     cursor: pointer;
+}
+
+.editing {
+    background-color: yellow;
 }
