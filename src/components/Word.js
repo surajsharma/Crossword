@@ -11,7 +11,6 @@ export default class Word extends Component {
             value: "",
             tuples: [],
             indices: [],
-
             cells: []
         };
     }
@@ -47,6 +46,7 @@ export default class Word extends Component {
                         addToRefs={this.props.addToRefs}
                         moveToNextCell={this.props.moveToNextCell}
                         changeActiveCell={this.props.changeActiveCell}
+                        currentWord={this.props.currentWord}
                     />
                 </React.Fragment>
             );

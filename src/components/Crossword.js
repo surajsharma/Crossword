@@ -30,14 +30,17 @@ export default class Crossword extends Component {
                 "https://www.staging.socratease.in/api/crossword/crossword-id/2"
             )
             .then((resp) => {
-                resp.data.wordList.forEach((word) => {
+                resp.data.wordList.forEach((word, index) => {
                     this.setState((prevState) => ({
                         data: {
                             ...data,
                             wordList: this.state.data.wordList.concat(word),
                             clues: this.state.data.clues.concat(word.clue),
                             numberOfWords: resp.data.wordList.length,
-                            answers: this.state.data.answers.concat(word.word)
+                            answers: this.state.data.answers.concat({
+                                word: word.word,
+                                number: index
+                            })
                         }
                     }));
                 });
@@ -77,13 +80,22 @@ export default class Crossword extends Component {
 
     checkAnswers = () => {
         const { attempts, answers } = this.state.data;
-        let score = 0;
 
-        if (attempts.length === answers.length) {
-            attempts.forEach((attempt, index) => {
+        // sortedAnswers
+        let sa = attempts.slice(0);
+
+        sa.sort((a, b) => {
+            return a.number - b.number;
+        });
+
+        let score = 0;
+        let newAttempts = sa;
+
+        if (newAttempts.length === answers.length) {
+            newAttempts.forEach((attempt, index) => {
                 if (
-                    answers.includes(attempts[index].word) &&
-                    answers[index] === attempt.word
+                    answers[attempt.number].word === attempt.word &&
+                    answers[index].number === attempt.number
                 ) {
                     score += 1;
                 }

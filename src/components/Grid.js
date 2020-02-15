@@ -34,6 +34,7 @@ export default class Grid extends Component {
                     addToRefs={this.props.addToRefs}
                     moveToNextCell={this.props.moveToNextCell}
                     changeActiveCell={this.props.changeActiveCell}
+                    currentWord={this.props.currentWord}
                 />
             ));
 
@@ -77,9 +78,9 @@ export default class Grid extends Component {
     render() {
         const dim =
             "0 0 " +
-            (13 * this.props.data.width + 3) +
+            (10 * this.props.data.width + 3) +
             " " +
-            (13 * this.props.data.height + 3);
+            (10 * this.props.data.height + 3);
         return (
             <div className="grid_container">
                 <svg viewBox={dim} xmlns="http://www.w3.org/2000/svg">
