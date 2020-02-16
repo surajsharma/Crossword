@@ -11,8 +11,7 @@ export default class Grid extends Component {
             grid: [],
             solvedWords: [],
             words: [],
-            wordsLoaded: true,
-            currentWord: null
+            wordsLoaded: true
         };
     }
 
@@ -21,6 +20,7 @@ export default class Grid extends Component {
             this.state.wordsLoaded &&
             this.props.data.numberOfWords === this.props.data.wordList.length
         ) {
+            console.log("GCDU", this.props.currentWord);
             const words = this.props.data.wordList.map((word, index) => (
                 <Word
                     refer={this.props.data.refs[index]}

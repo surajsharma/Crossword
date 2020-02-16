@@ -41,7 +41,7 @@
 }
 
 .clue {
-    padding: 5px;
+    font-size: 0.8em;
 }
 
 .clue:hover {
@@ -52,4 +52,8 @@
 
 .editing {
     background-color: yellow;
+}
+
+li {
+    margin-left: 10px;
 }

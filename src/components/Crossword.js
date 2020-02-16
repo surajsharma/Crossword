@@ -50,6 +50,13 @@ export default class Crossword extends Component {
             });
     }
 
+    componentDidUpdate() {
+        let { currentWord } = this.state;
+        if (currentWord) {
+            console.log("update currentWord here");
+        }
+    }
+
     addSolvedWord = (tuple) => {
         let { attempts, numberOfWords } = this.state.data;
 
@@ -97,6 +104,11 @@ export default class Crossword extends Component {
                     answers[attempt.number].word === attempt.word &&
                     answers[index].number === attempt.number
                 ) {
+                    console.log(
+                        `${attempt.word} : ${attempt.number} - ${
+                            answers[attempt.number].word
+                        }: ${answers[index].number}`
+                    );
                     score += 1;
                 }
             });
@@ -197,7 +209,12 @@ export default class Crossword extends Component {
                     currentWord: activeCell.wordNum
                 }
             }),
-            console.log("currentFocus ", newActiveCell)
+            console.log(
+                "currentFocus ",
+                newActiveCell
+                // activeCell,
+                // `current word is ${this.state.data.currentWord}`
+            )
         );
     };
 
@@ -214,7 +231,7 @@ export default class Crossword extends Component {
     render() {
         if (this.state.data.wordList.length > 0) {
             return (
-                <React.Fragment>
+                <div className="CW-container">
                     <Grid
                         data={this.state.data}
                         addSolvedWord={this.addSolvedWord}
@@ -238,14 +255,25 @@ export default class Crossword extends Component {
                                         this.handleClueClick(e, index)
                                     }
                                 >
-                                    {clue}
+                                    {clue}&nbsp;(
+                                    {this.state.data.wordList[index].length})
                                 </li>
                             </div>
                         );
                     })}
-                    <button onClick={this.checkAnswers}>Check answers</button>
-                    <button onClick={this.clearEverything}>Clear</button>
-                </React.Fragment>
+                    <div className="buttons">
+                        <button onClick={this.checkThis}>Check This</button>
+                        <button onClick={this.revealThis}>Reveal This</button>
+                        <button onClick={this.clearThis}>Clear This</button>
+                        <br />
+                        <br />
+                        <button onClick={this.checkAnswers}>Check All</button>
+                        <button onClick={this.revealAll}>Reveal All</button>
+                        <button onClick={this.clearEverything}>
+                            Clear All
+                        </button>
+                    </div>
+                </div>
             );
         } else {
             return <p>Loading...</p>;
