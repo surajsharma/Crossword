@@ -59,8 +59,16 @@ export default class Crossword extends Component {
 
     addSolvedWord = (tuple) => {
         let { attempts, numberOfWords } = this.state.data;
+        let answered = [];
 
-        if (attempts.length < numberOfWords) {
+        for (let i = 0; i < attempts.length; i++) {
+            answered.push(attempts[i].number);
+        }
+
+        if (
+            attempts.length < numberOfWords &&
+            !answered.includes(tuple.number)
+        ) {
             this.setState(
                 (prevState) => ({
                     data: {

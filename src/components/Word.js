@@ -16,6 +16,12 @@ export default class Word extends Component {
         };
     }
 
+    // static getDerivedStateFromProps() {
+    //     console.log("Static method called");
+
+    //     return null;
+    // }
+
     componentDidMount() {
         let cells = [];
         const splitWord = this.props.word.split("");
@@ -57,20 +63,21 @@ export default class Word extends Component {
     }
 
     componentDidUpdate() {
-        console.log(
-            "WCDU",
-            this.props.currentWord === this.props.number,
-            this.props.currentWord,
-            this.props.number
-        );
-
         const { solved, solution } = this.state;
         if (this.state.solved.length === solution.length) {
-            this.props.wordChange({
-                value: solved,
-                number: this.props.number,
-                currentWord: this.props.currentWord
-            });
+            this.props.wordChange(
+                {
+                    value: solved,
+                    number: this.props.number,
+                    currentWord: this.props.currentWord
+                },
+                console.log(
+                    "WCDU -->",
+                    this.props.currentWord === this.props.number,
+                    this.props.currentWord,
+                    this.props.number
+                )
+            );
         }
     }
 
