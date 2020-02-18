@@ -58,17 +58,43 @@ export default class Crossword extends Component {
     }
 
     addSolvedWord = (tuple) => {
-        let { attempts, numberOfWords } = this.state.data;
-        let answered = [];
+        let { attempts } = this.state.data;
+        let answeredIndices = [];
 
+        //prepare a list of indices already answered
         for (let i = 0; i < attempts.length; i++) {
-            answered.push(attempts[i].number);
+            answeredIndices.push(attempts[i].number);
         }
 
-        if (
-            attempts.length < numberOfWords &&
-            !answered.includes(tuple.number)
-        ) {
+        if (attempts.length !== 0) {
+            if (answeredIndices.includes(tuple.number)) {
+                //[0,2,3], tuple.number===2
+                attempts[answeredIndices.indexOf(tuple.number)].word =
+                    tuple.word;
+
+                this.setState(
+                    (prevState) => ({
+                        data: {
+                            ...this.state.data,
+                            attempts: attempts
+                        }
+                    }),
+                    console.log("Edited attempt ", tuple)
+                );
+            } else {
+                //add an attempt
+                this.setState(
+                    (prevState) => ({
+                        data: {
+                            ...this.state.data,
+                            attempts: [...this.state.data.attempts, tuple]
+                        }
+                    }),
+                    console.log("Added attempt ", tuple)
+                );
+            }
+        } else {
+            //add an attempt
             this.setState(
                 (prevState) => ({
                     data: {
@@ -77,18 +103,6 @@ export default class Crossword extends Component {
                     }
                 }),
                 console.log("Added attempt ", tuple)
-            );
-        } else {
-            //check if tuple.number exists in attempt
-            attempts[tuple.number].word = tuple.word;
-            this.setState(
-                (prevState) => ({
-                    data: {
-                        ...this.state.data,
-                        attempts: attempts
-                    }
-                }),
-                console.log("Edited attempt ", tuple)
             );
         }
     };
@@ -193,12 +207,6 @@ export default class Crossword extends Component {
     changeActiveCell = (activeCell) => {
         // activeCell = {index: 0, wordNum: 0}
 
-        // console.log(
-        //     "changeActiveCell",
-        //     activeCell,
-        //     this.state.data.currentWord
-        // );
-
         let newActiveCell = 0,
             allPrevWords = 0,
             allCurWordChars = activeCell.index;
@@ -209,21 +217,13 @@ export default class Crossword extends Component {
 
         newActiveCell = allPrevWords + allCurWordChars;
 
-        this.setState(
-            (prevState) => ({
-                data: {
-                    ...this.state.data,
-                    currentFocus: newActiveCell,
-                    currentWord: activeCell.wordNum
-                }
-            }),
-            console.log(
-                "currentFocus ",
-                newActiveCell
-                // activeCell,
-                // `current word is ${this.state.data.currentWord}`
-            )
-        );
+        this.setState((prevState) => ({
+            data: {
+                ...this.state.data,
+                currentFocus: newActiveCell,
+                currentWord: activeCell.wordNum
+            }
+        }));
     };
 
     addToRefs = (ref) => {

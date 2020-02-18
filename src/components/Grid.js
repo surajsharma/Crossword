@@ -73,6 +73,9 @@ export default class Grid extends Component {
         });
 
         sorted.forEach((e) => (word += e.value));
+        // console.log(
+        //     `G sending ==> ${word} : ${tuple.number} where words is ${this.state.words}`
+        // );
         this.props.addSolvedWord({ word: word, number: tuple.number });
     };
 
