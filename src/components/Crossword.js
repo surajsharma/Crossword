@@ -54,6 +54,8 @@ export default class Crossword extends Component {
         let { attempts } = this.state.data;
         let answeredIndices = [];
 
+        tuple.word = tuple.word.toLowerCase();
+
         //prepare a list of indices already answered
         for (let i = 0; i < attempts.length; i++) {
             answeredIndices.push(attempts[i].number);

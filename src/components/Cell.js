@@ -6,7 +6,6 @@ export default class Cell extends Component {
         super(props);
         this.state = {
             editing: false,
-            wordEditing: props.wordEditing,
             inputVal: "",
             solved: false,
             value: "",
@@ -84,13 +83,7 @@ export default class Cell extends Component {
                 : this.props.y + 10 * (this.props.y - 1);
 
         const input = (
-            <foreignObject
-                x={x}
-                y={y}
-                width="9"
-                height="9"
-                className={this.state.editing ? "input current" : "input"}
-            >
+            <foreignObject x={x} y={y} width="9" height="9" className={"input"}>
                 <div>
                     <input
                         type="text"
@@ -98,9 +91,7 @@ export default class Cell extends Component {
                         onBlur={this.handleBlur}
                         onChange={this.handleChange}
                         value={this.state.inputVal}
-                        className={
-                            this.state.editing ? "input current" : "input"
-                        }
+                        className={"input"}
                         maxLength="1"
                         ref={this.cellRef}
                     />
@@ -117,7 +108,7 @@ export default class Cell extends Component {
                         height={10}
                         style={{
                             fill: this.props.wordEditing ? wordEditing : style,
-                            strokeWidth: "0.4px",
+                            strokeWidth: "0.1px",
                             stroke: "black"
                         }}
                     />
