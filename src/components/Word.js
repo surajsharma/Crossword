@@ -64,6 +64,7 @@ export default class Word extends Component {
 
     componentDidUpdate() {
         const { solved, solution } = this.state;
+
         if (this.state.solved.length === solution.length) {
             this.props.wordChange(
                 {

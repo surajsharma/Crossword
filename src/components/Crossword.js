@@ -50,13 +50,6 @@ export default class Crossword extends Component {
             });
     }
 
-    componentDidUpdate() {
-        let { currentWord } = this.state;
-        if (currentWord) {
-            console.log("update currentWord here");
-        }
-    }
-
     addSolvedWord = (tuple) => {
         let { attempts } = this.state.data;
         let answeredIndices = [];
@@ -236,6 +229,18 @@ export default class Crossword extends Component {
         }));
     };
 
+    handleNewCurrentWord = (neWord) => {
+        this.setState(
+            (prevState) => ({
+                data: {
+                    ...this.state.data,
+                    currentWord: neWord
+                }
+            }),
+            console.log("CWhandleNewCurrentWord", neWord)
+        );
+    };
+
     render() {
         if (this.state.data.wordList.length > 0) {
             return (
@@ -247,6 +252,7 @@ export default class Crossword extends Component {
                         moveToNextCell={this.moveToNextCell}
                         changeActiveCell={this.changeActiveCell}
                         currentWord={this.state.data.currentWord}
+                        handleNewCurrentWord={this.handleNewCurrentWord}
                     ></Grid>
                     {this.state.data.clues.map((clue, index) => {
                         return (

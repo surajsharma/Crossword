@@ -11,17 +11,25 @@ export default class Grid extends Component {
             grid: [],
             solvedWords: [],
             words: [],
-            wordsLoaded: true
+            wordsLoaded: false,
+            currentWord: this.props.currentWord
         };
     }
 
     componentDidUpdate() {
+        if (this.props.currentWord !== this.state.currentWord) {
+            this.setState(
+                { currentWord: this.props.currentWord },
+                console.log("GcDu", this.state.currentWord)
+            );
+
+            // this.props.handleNewCurrentWord(this.props.currentWord);
+        }
+
         if (
-            this.state.wordsLoaded &&
+            !this.state.wordsLoaded &&
             this.props.data.numberOfWords === this.props.data.wordList.length
         ) {
-            console.log("GCDU", this.props.currentWord);
-
             const words = this.props.data.wordList.map((word, index) => (
                 <Word
                     refer={this.props.data.refs[index]}
@@ -30,16 +38,16 @@ export default class Grid extends Component {
                     x={word.x}
                     y={word.y}
                     orientation={word.orientation}
-                    key={Math.random()}
+                    key={word.word}
                     wordChange={this.handleWordChange}
                     addToRefs={this.props.addToRefs}
                     moveToNextCell={this.props.moveToNextCell}
                     changeActiveCell={this.props.changeActiveCell}
-                    currentWord={this.props.currentWord}
+                    currentWord={this.state.currentWord}
                 />
             ));
 
-            this.setState({ wordsLoaded: false, words: words });
+            this.setState({ wordsLoaded: true, words: words });
         }
     }
 
@@ -62,9 +70,6 @@ export default class Grid extends Component {
     handleWordChange = (tuple) => {
         //the incoming tuple is an array, needs sorting by tuple.index
 
-        //the adding to solvedWords approach should be changed
-        //instead of adding any change, modify word in-situ by location
-
         let sorted = tuple.value.slice(0);
         let word = "";
 
@@ -73,10 +78,15 @@ export default class Grid extends Component {
         });
 
         sorted.forEach((e) => (word += e.value));
+
         // console.log(
         //     `G sending ==> ${word} : ${tuple.number} where words is ${this.state.words}`
         // );
-        this.props.addSolvedWord({ word: word, number: tuple.number });
+
+        this.props.addSolvedWord(
+            { word: word, number: tuple.number },
+            this.props.handleNewCurrentWord(this.props.currentWord)
+        );
     };
 
     render() {
