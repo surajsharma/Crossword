@@ -5,19 +5,11 @@ export default class Cell extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            editing: false,
             inputVal: "",
-            solved: false,
-            value: "",
-            wordSolved: false
+            value: ""
         };
 
         this.cellRef = React.createRef();
-    }
-
-    componentDidUpdate() {
-        if (this.state.value !== "") {
-        }
     }
 
     componentDidMount() {
@@ -36,12 +28,6 @@ export default class Cell extends Component {
 
     handleBlur = () => {
         this.setState({ editing: !this.state.editing });
-        if (this.props.value === "") {
-            this.setState(
-                { value: this.props.value, solved: false }
-                // this.props.onWordUnfocus()
-            );
-        }
     };
 
     handleChange = (e) => {
@@ -51,7 +37,6 @@ export default class Cell extends Component {
         if (value !== "") {
             this.setState(
                 {
-                    solved: true,
                     value: value
                 },
                 this.props.onWordChange({ value, index, wordNum })
@@ -64,13 +49,7 @@ export default class Cell extends Component {
             ? "rgb(200,200,0)"
             : this.props.value === ""
             ? "rgb(10, 10, 10)"
-            : this.props.editing
-            ? "rgb(200,200,0)"
             : "rgb(200, 200, 200)";
-
-        const wordEditing = this.props.wordEditing
-            ? "rgb(200,200,0)"
-            : "rgb(10, 10, 10)";
 
         const x =
             this.props.x === 1
@@ -107,7 +86,7 @@ export default class Cell extends Component {
                         width={10}
                         height={10}
                         style={{
-                            fill: this.props.wordEditing ? wordEditing : style,
+                            fill: style,
                             strokeWidth: "0.1px",
                             stroke: "black"
                         }}
