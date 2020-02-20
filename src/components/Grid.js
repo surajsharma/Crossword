@@ -12,25 +12,28 @@ export default class Grid extends Component {
             solvedWords: [],
             words: [],
             wordsLoaded: false,
-            currentWord: this.props.currentWord
+            currentWord: null
         };
+        // console.log("G con", this.props.currentWord);
     }
 
-    componentDidUpdate() {
-        if (this.props.currentWord !== this.state.currentWord) {
+    componentDidUpdate(prevProps) {
+        console.log("G cdu", this.props.currentWord);
+        let words = [];
+        if (prevProps.currentWord !== this.state.currentWord) {
             this.setState(
                 { currentWord: this.props.currentWord },
-                console.log("GcDu", this.state.currentWord)
+                console.log("GcDu", this.props)
             );
-
-            // this.props.handleNewCurrentWord(this.props.currentWord);
+            // this.props.handleNewCurrentWord(this.props.currentWord); ???
         }
 
         if (
             !this.state.wordsLoaded &&
             this.props.data.numberOfWords === this.props.data.wordList.length
         ) {
-            const words = this.props.data.wordList.map((word, index) => (
+            // WORDS are mapped each time CW rerenders?
+            words = this.props.data.wordList.map((word, index) => (
                 <Word
                     refer={this.props.data.refs[index]}
                     number={index}
@@ -43,15 +46,20 @@ export default class Grid extends Component {
                     addToRefs={this.props.addToRefs}
                     moveToNextCell={this.props.moveToNextCell}
                     changeActiveCell={this.props.changeActiveCell}
-                    currentWord={this.state.currentWord}
+                    currentWord={this.props.currentWord} // <===== but not when passed
                 />
             ));
-
-            this.setState({ wordsLoaded: true, words: words });
+            this.setState({
+                wordsLoaded: true,
+                words: words,
+                currentWord: this.props.currentWord
+            });
         }
     }
 
+    // empty cells
     componentDidMount() {
+        console.log("G cdm", this.props.currentWord);
         let width = this.props.data.width;
         let height = this.props.data.height;
         let newGrid = [];
@@ -90,6 +98,7 @@ export default class Grid extends Component {
     };
 
     render() {
+        console.log(this.props.currentWord);
         const dim =
             "0 0 " +
             (10 * this.props.data.width + 3) +

@@ -17,7 +17,7 @@ export default class Crossword extends Component {
                 numberOfWords: 0,
                 refs: [],
                 currentFocus: 0,
-                currentWord: null
+                currentWord: 0
             }
         };
     }
@@ -48,6 +48,10 @@ export default class Crossword extends Component {
             .catch((error) => {
                 console.log(error);
             });
+    }
+
+    componentDidUpdate() {
+        console.log("Parent cdu");
     }
 
     addSolvedWord = (tuple) => {

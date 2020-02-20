@@ -7,18 +7,17 @@ export default class Word extends Component {
         this.state = {
             solution: this.props.word,
             solved: [],
-            editing: this.props.currentWord === this.props.index,
-            value: "",
             tuples: [],
             indices: [],
             cells: [],
-            currentWord: this.props.currentWord
+            editing: this.props.currentWord === this.props.index,
+            value: "",
+            currentWord: 0
         };
     }
 
     // static getDerivedStateFromProps() {
     //     console.log("Static method called");
-
     //     return null;
     // }
 
@@ -31,12 +30,8 @@ export default class Word extends Component {
                 <React.Fragment key={this.props.word + index}>
                     <Cell
                         index={index}
-                        word={this.props.word}
-                        wordEditing={this.state.editing}
-                        orientation={this.props.orientation}
                         number={index === 0 ? this.props.number + 1 : null}
                         wordNum={this.props.number}
-                        length={this.props.word.length}
                         x={
                             this.props.orientation === "across"
                                 ? this.props.x + index
@@ -48,12 +43,9 @@ export default class Word extends Component {
                                 : this.props.y
                         }
                         onWordChange={this.handleWordChange}
-                        refer={this.props.refer}
-                        id={this.props.word}
                         addToRefs={this.props.addToRefs}
                         moveToNextCell={this.props.moveToNextCell}
                         changeActiveCell={this.props.changeActiveCell}
-                        currentWord={this.props.currentWord}
                     />
                 </React.Fragment>
             );
@@ -83,11 +75,13 @@ export default class Word extends Component {
     }
 
     addToRefs = (ref) => {
+        //called by Cell cDm
         this.props.addToRefs(ref);
     };
 
     handleWordChange = (tuple) => {
-        // console.log("word handleWordChange", tuple);
+        //called by Cell handleChange
+        console.log("word handleWordChange", tuple);
 
         let { tuples, indices, solved } = this.state;
 

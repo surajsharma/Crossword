@@ -6,5 +6,4 @@
 4. Clear This
 5. Check This
 6. Word does not highlight when editing, only single cell
-7. Check against answers with spaces / incomplete answers
-8. implement local / session storage
+7. implement local / session storage
