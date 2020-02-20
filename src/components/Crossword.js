@@ -17,7 +17,7 @@ export default class Crossword extends Component {
                 numberOfWords: 0,
                 refs: [],
                 currentFocus: 0,
-                currentWord: 0
+                currentWord: null
             }
         };
     }
@@ -51,7 +51,7 @@ export default class Crossword extends Component {
     }
 
     componentDidUpdate() {
-        console.log("Parent cdu");
+        // console.log("Parent cdu");
     }
 
     addSolvedWord = (tuple) => {
@@ -285,8 +285,6 @@ export default class Crossword extends Component {
                         <button onClick={this.checkThis}>Check This</button>
                         <button onClick={this.revealThis}>Reveal This</button>
                         <button onClick={this.clearThis}>Clear This</button>
-                        <br />
-                        <br />
                         <button onClick={this.checkAnswers}>Check All</button>
                         <button onClick={this.revealAll}>Reveal All</button>
                         <button onClick={this.clearEverything}>

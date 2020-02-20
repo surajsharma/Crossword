@@ -64,12 +64,7 @@ export default class Word extends Component {
                     number: this.props.number,
                     currentWord: this.props.currentWord
                 },
-                console.log(
-                    "WCDU -->",
-                    this.props.currentWord === this.props.number,
-                    this.props.currentWord,
-                    this.props.number
-                )
+                console.log("WcDu -->", this.props.currentWord)
             );
         }
     }
@@ -81,7 +76,7 @@ export default class Word extends Component {
 
     handleWordChange = (tuple) => {
         //called by Cell handleChange
-        console.log("word handleWordChange", tuple);
+        // console.log("word handleWordChange", tuple);
 
         let { tuples, indices, solved } = this.state;
 
