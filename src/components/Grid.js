@@ -14,15 +14,13 @@ export default class Grid extends Component {
             wordsLoaded: false,
             currentWord: null
         };
-        // console.log("G con", this.props.currentWord);
     }
 
     componentDidUpdate(prevProps) {
-        console.log("G cdu", this.props.currentWord);
         let words = [];
         if (prevProps.currentWord !== this.state.currentWord) {
             this.setState(
-                { currentWord: this.props.currentWord },
+                { currentWord: this.props.currentWord, wordsLoaded: false },
                 console.log("GcDu", this.props)
             );
             // this.props.handleNewCurrentWord(this.props.currentWord); ???
@@ -32,6 +30,7 @@ export default class Grid extends Component {
             !this.state.wordsLoaded &&
             this.props.data.numberOfWords === this.props.data.wordList.length
         ) {
+            console.log("G cdu, mapping wordlist", this.props.currentWord);
             // WORDS are mapped each time CW rerenders?
             words = this.props.data.wordList.map((word, index) => (
                 <Word
@@ -46,7 +45,7 @@ export default class Grid extends Component {
                     addToRefs={this.props.addToRefs}
                     moveToNextCell={this.props.moveToNextCell}
                     changeActiveCell={this.props.changeActiveCell}
-                    currentWord={this.props.currentWord} // <===== but not when passed
+                    currentWord={this.state.currentWord} // <===== but not when passed
                 />
             ));
             this.setState({
@@ -99,6 +98,7 @@ export default class Grid extends Component {
 
     render() {
         console.log(this.props.currentWord);
+
         const dim =
             "0 0 " +
             (10 * this.props.data.width + 3) +
