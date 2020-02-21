@@ -24,7 +24,6 @@ export default class Crossword extends Component {
     }
 
     componentDidMount() {
-        // console.log("cDm CW");
         const { data } = this.state;
 
         axios
@@ -53,10 +52,7 @@ export default class Crossword extends Component {
     }
 
     componentDidUpdate(prevState) {
-        // console.log("Parent cdu");
         if (prevState !== this.state) {
-            // console.log("CW componentDidUpdate", prevState, this.state);
-            //6 times
             if (this.state.data.reset) {
                 console.log("reset");
             }
@@ -180,7 +176,7 @@ export default class Crossword extends Component {
         }
 
         this.setState(
-            { currentFocus: startingCell },
+            { currentFocus: startingCell, currentWord: index },
             this.state.data.refs[startingCell].current.focus()
         );
     };
@@ -214,10 +210,6 @@ export default class Crossword extends Component {
     };
 
     changeActiveCell = (activeCell) => {
-        // activeCell = { index: 0, wordNum: 0 };
-        // clicking on a cell should come here
-        // console.log("changing active cell");
-
         let newActiveCell = 0,
             allPrevWords = 0,
             allCurWordChars = activeCell.index;
@@ -228,16 +220,13 @@ export default class Crossword extends Component {
 
         newActiveCell = allPrevWords + allCurWordChars;
 
-        this.setState(
-            (prevState) => ({
-                data: {
-                    ...this.state.data,
-                    currentFocus: newActiveCell,
-                    currentWord: activeCell.wordNum
-                }
-            })
-            // console.log("Active Cell, Current Word Changed")
-        );
+        this.setState((prevState) => ({
+            data: {
+                ...this.state.data,
+                currentFocus: newActiveCell,
+                currentWord: activeCell.wordNum
+            }
+        }));
     };
 
     addToRefs = (ref) => {
@@ -251,15 +240,12 @@ export default class Crossword extends Component {
     };
 
     handleNewCurrentWord = (neWord) => {
-        this.setState(
-            (prevState) => ({
-                data: {
-                    ...this.state.data,
-                    currentWord: neWord
-                }
-            })
-            // console.log("CWhandleNewCurrentWord", neWord)
-        );
+        this.setState((prevState) => ({
+            data: {
+                ...this.state.data,
+                currentWord: neWord
+            }
+        }));
     };
 
     render() {

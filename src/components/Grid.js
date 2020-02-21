@@ -18,20 +18,17 @@ export default class Grid extends Component {
 
     componentDidUpdate(prevProps) {
         let words = [];
-        if (prevProps.currentWord !== this.state.currentWord) {
-            this.setState(
-                { currentWord: this.props.currentWord, wordsLoaded: false }
-                // console.log("GcDu -->", this.props.currentWord)
-            );
-
-            // this.props.handleNewCurrentWord(this.props.currentWord);
+        if (prevProps.currentWord !== this.props.currentWord) {
+            this.setState({
+                currentWord: this.props.currentWord,
+                wordsLoaded: false
+            });
         }
 
         if (
             !this.state.wordsLoaded &&
             this.props.data.numberOfWords === this.props.data.wordList.length
         ) {
-            // console.log("G cdu, mapping wordlist", this.props.currentWord);
             // WORDS are mapped each time CW rerenders?
             words = this.props.data.wordList.map((word, index) => (
                 <Word
@@ -76,20 +73,13 @@ export default class Grid extends Component {
 
     handleWordChange = (tuple) => {
         //the incoming tuple is an array, needs sorting by tuple.index
-
         let sorted = tuple.value.slice(0);
         let word = "";
-
         sorted.sort((a, b) => {
             return a.index - b.index;
         });
 
         sorted.forEach((e) => (word += e.value));
-
-        // console.log(
-        //     `G sending ==> ${word} : ${tuple.number} where words is ${this.state.words}`
-        // );
-
         this.props.addSolvedWord(
             { word: word, number: tuple.number },
             this.props.handleNewCurrentWord(this.props.currentWord)
