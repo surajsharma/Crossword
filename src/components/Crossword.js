@@ -169,8 +169,22 @@ export default class Crossword extends Component {
         console.log("checkthis");
     };
 
-    revealThis = () => {
+    revealThis = (all) => {
         let newRevealedWords = [];
+
+        if (all) {
+            this.state.data.wordList.forEach((data, index) =>
+                newRevealedWords.push(index)
+            );
+
+            this.setState((prevState) => ({
+                data: {
+                    ...this.state.data,
+                    revealedWords: newRevealedWords
+                }
+            }));
+        }
+
         if (
             this.state.data.currentWord !== null &&
             this.state.data.revealedWords.indexOf(
@@ -193,7 +207,9 @@ export default class Crossword extends Component {
 
     clearThis = () => {};
 
-    revealAll = () => {};
+    revealAll = () => {
+        this.revealThis(true);
+    };
 
     handleClueClick = (e, index) => {
         let startingCell = 0;
