@@ -6,7 +6,8 @@ export default class Cell extends Component {
         super(props);
         this.state = {
             inputVal: "",
-            value: ""
+            value: "",
+            currentWord: this.props.currentWord
         };
 
         this.cellRef = React.createRef();
@@ -17,11 +18,13 @@ export default class Cell extends Component {
             prevProps.currentWord !== this.props.currentWord &&
             this.props.currentWord !== null
         ) {
-            console.log(
-                `Cell updated @CurrentWord props:
-                ${this.props.currentWord} 
-                PrevProps CurrentWord: ${prevProps.currentWord}`
-            );
+            // console.log(
+            //     `Cell updated @CurrentWord props:
+            //     ${this.props.currentWord}
+            //     PrevProps CurrentWord: ${prevProps.currentWord}`
+            // );
+
+            this.setState({ currentWord: this.props.currentWord });
         }
     }
 
@@ -32,15 +35,15 @@ export default class Cell extends Component {
     }
 
     handleFocus = () => {
-        console.log(
-            `Focus Cell @CurrentWord:${this.props.currentWord}, WordNum:${this.props.wordNum}`
-        );
-
         this.setState({ editing: !this.state.editing });
-        this.props.changeActiveCell({
-            index: this.props.index,
-            wordNum: this.props.wordNum
-        });
+        this.props.changeActiveCell(
+            {
+                index: this.props.index,
+                wordNum: this.props.wordNum,
+                currentWord: this.props.wordNum
+            },
+            console.log()
+        );
     };
 
     handleBlur = () => {
@@ -48,7 +51,6 @@ export default class Cell extends Component {
     };
 
     handleChange = (e) => {
-        console.log(this.props.currentWord, this.props.index);
         let { index, wordNum } = this.props;
         let value = e.target.value;
 

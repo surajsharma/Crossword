@@ -29,7 +29,7 @@ export default class Word extends Component {
             cells.push(
                 <React.Fragment key={this.props.word + index}>
                     <Cell
-                        currentWord={this.state.currentWord}
+                        currentWord={this.props.currentWord}
                         answer={this.props.word[index]}
                         value={this.state.value}
                         index={index}
@@ -66,7 +66,7 @@ export default class Word extends Component {
                 cells.push(
                     <React.Fragment key={this.props.word + index}>
                         <Cell
-                            currentWord={this.state.currentWord}
+                            currentWord={this.props.currentWord}
                             answer={this.props.word[index]}
                             value={this.state.tuples}
                             index={index}
@@ -121,7 +121,7 @@ export default class Word extends Component {
 
     handleWordChange = (tuple) => {
         //called by Cell handleChange
-        console.log("word handleWordChange", tuple, this.props);
+        // console.log("word handleWordChange", tuple, this.props);
 
         let { tuples, indices, solved } = this.state;
 
@@ -144,8 +144,8 @@ export default class Word extends Component {
             solved[edit] = tuple;
 
             this.setState(
-                { tuples: tuples, solved: solved },
-                console.log("index edited", tuples[edit])
+                { tuples: tuples, solved: solved }
+                // console.log("index edited", tuples[edit])
             );
         }
         this.props.moveToNextCell();
