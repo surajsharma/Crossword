@@ -11,15 +11,15 @@ export default class Word extends Component {
             indices: [],
             cells: [],
             editing: this.props.currentWord === this.props.index,
-            value: "",
-            currentWord: 0
+            value: " ",
+            currentWord: null
         };
     }
 
-    static getDerivedStateFromProps() {
-        console.log("Static method called");
-        return null;
-    }
+    // static getDerivedStateFromProps() {
+    //     console.log("Static method called");
+    //     return null;
+    // }
 
     componentDidMount() {
         let cells = [];
@@ -29,7 +29,9 @@ export default class Word extends Component {
             cells.push(
                 <React.Fragment key={this.props.word + index}>
                     <Cell
-                        value={this.props.word[index]}
+                        currentWord={this.state.currentWord}
+                        answer={this.props.word[index]}
+                        value={this.state.value}
                         index={index}
                         number={index === 0 ? this.props.number + 1 : null}
                         wordNum={this.props.number}
@@ -55,8 +57,48 @@ export default class Word extends Component {
         this.setState({ cells: cells, currentWord: this.props.currentWord });
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
+        if (prevProps !== this.props) {
+            let cells = [];
+            const splitWord = this.props.word.split("");
+
+            splitWord.forEach((element, index) => {
+                cells.push(
+                    <React.Fragment key={this.props.word + index}>
+                        <Cell
+                            currentWord={this.state.currentWord}
+                            answer={this.props.word[index]}
+                            value={this.state.tuples}
+                            index={index}
+                            number={index === 0 ? this.props.number + 1 : null}
+                            wordNum={this.props.number}
+                            x={
+                                this.props.orientation === "across"
+                                    ? this.props.x + index
+                                    : this.props.x
+                            }
+                            y={
+                                this.props.orientation === "down"
+                                    ? this.props.y + index
+                                    : this.props.y
+                            }
+                            onWordChange={this.handleWordChange}
+                            addToRefs={this.props.addToRefs}
+                            moveToNextCell={this.props.moveToNextCell}
+                            changeActiveCell={this.props.changeActiveCell}
+                        />
+                    </React.Fragment>
+                );
+            });
+
+            this.setState({
+                cells: cells,
+                currentWord: this.props.currentWord
+            });
+        }
+        //is called for each word on re render
         const { solved, solution } = this.state;
+        // console.log(solved, solution);
 
         if (this.state.solved.length === solution.length) {
             this.props.wordChange(
@@ -64,11 +106,13 @@ export default class Word extends Component {
                     value: solved,
                     number: this.props.number,
                     currentWord: this.props.currentWord
-                },
-                console.log("WcDu -->", this.props.currentWord)
+                }
+                // console.log("WcDu -->", this.props.currentWord)
             );
         }
     }
+
+    clearWord = (number) => {};
 
     addToRefs = (ref) => {
         //called by Cell cDm
@@ -77,7 +121,7 @@ export default class Word extends Component {
 
     handleWordChange = (tuple) => {
         //called by Cell handleChange
-        // console.log("word handleWordChange", tuple);
+        console.log("word handleWordChange", tuple, this.props);
 
         let { tuples, indices, solved } = this.state;
 

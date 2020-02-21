@@ -12,6 +12,19 @@ export default class Cell extends Component {
         this.cellRef = React.createRef();
     }
 
+    componentDidUpdate(prevProps) {
+        if (
+            prevProps.currentWord !== this.props.currentWord &&
+            this.props.currentWord !== null
+        ) {
+            console.log(
+                `Cell updated @CurrentWord props:
+                ${this.props.currentWord} 
+                PrevProps CurrentWord: ${prevProps.currentWord}`
+            );
+        }
+    }
+
     componentDidMount() {
         if (typeof this.props.addToRefs === "function") {
             this.props.addToRefs(this.cellRef);
@@ -19,6 +32,10 @@ export default class Cell extends Component {
     }
 
     handleFocus = () => {
+        console.log(
+            `Focus Cell @CurrentWord:${this.props.currentWord}, WordNum:${this.props.wordNum}`
+        );
+
         this.setState({ editing: !this.state.editing });
         this.props.changeActiveCell({
             index: this.props.index,
@@ -31,6 +48,7 @@ export default class Cell extends Component {
     };
 
     handleChange = (e) => {
+        console.log(this.props.currentWord, this.props.index);
         let { index, wordNum } = this.props;
         let value = e.target.value;
 
@@ -45,11 +63,13 @@ export default class Cell extends Component {
     };
 
     render() {
-        const style = this.state.editing
-            ? "rgb(200,200,0)"
-            : this.props.value === ""
-            ? "rgb(10, 10, 10)"
-            : "rgb(200, 200, 200)";
+        // console.log(this.props.value, "cell render");
+        const style =
+            this.props.value === "-"
+                ? "rgb(10, 10, 10)"
+                : this.props.currentWord === this.props.wordNum
+                ? "rgb(200,200,0)"
+                : "rgb(200, 200, 200)";
 
         const x =
             this.props.x === 1

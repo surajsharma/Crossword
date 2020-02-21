@@ -17,12 +17,14 @@ export default class Crossword extends Component {
                 numberOfWords: 0,
                 refs: [],
                 currentFocus: 0,
-                currentWord: null
+                currentWord: null,
+                reset: false
             }
         };
     }
 
     componentDidMount() {
+        // console.log("cDm CW");
         const { data } = this.state;
 
         axios
@@ -50,8 +52,15 @@ export default class Crossword extends Component {
             });
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevState) {
         // console.log("Parent cdu");
+        if (prevState !== this.state) {
+            // console.log("change");
+            //6 times
+            if (this.state.data.reset) {
+                console.log("reset");
+            }
+        }
     }
 
     addSolvedWord = (tuple) => {
@@ -77,8 +86,8 @@ export default class Crossword extends Component {
                             ...this.state.data,
                             attempts: attempts
                         }
-                    }),
-                    console.log("Edited attempt ", tuple)
+                    })
+                    // console.log("Edited attempt ", tuple)
                 );
             } else {
                 //add an attempt
@@ -88,8 +97,8 @@ export default class Crossword extends Component {
                             ...this.state.data,
                             attempts: [...this.state.data.attempts, tuple]
                         }
-                    }),
-                    console.log("Added attempt ", tuple)
+                    })
+                    // console.log("Added attempt ", tuple)
                 );
             }
         } else {
@@ -100,8 +109,8 @@ export default class Crossword extends Component {
                         ...this.state.data,
                         attempts: [...this.state.data.attempts, tuple]
                     }
-                }),
-                console.log("Added attempt ", tuple)
+                })
+                // console.log("Added attempt ", tuple)
             );
         }
     };
@@ -125,11 +134,11 @@ export default class Crossword extends Component {
                     answers[attempt.number].word === attempt.word &&
                     answers[index].number === attempt.number
                 ) {
-                    console.log(
-                        `${attempt.word} : ${attempt.number} - ${
-                            answers[attempt.number].word
-                        }: ${answers[index].number}`
-                    );
+                    // console.log(
+                    //     `${attempt.word} : ${attempt.number} - ${
+                    //         answers[attempt.number].word
+                    //     }: ${answers[index].number}`
+                    // );
                     score += 1;
                 }
             });
@@ -154,19 +163,11 @@ export default class Crossword extends Component {
             (prevState) => ({
                 data: {
                     ...this.state.data,
-                    attempts: [],
-                    currentFocus: 0,
-                    currentWord: null
+                    reset: !this.state.data.reset
                 }
             }),
             console.log("Clear")
         );
-
-        let newRefs = [];
-
-        for (let i = 0; i < this.state.data.numberOfWords; i++) {
-            console.log(this.state.data.refs[i].current);
-        }
     };
 
     handleClueClick = (e, index) => {
@@ -215,6 +216,8 @@ export default class Crossword extends Component {
 
     changeActiveCell = (activeCell) => {
         // activeCell = { index: 0, wordNum: 0 };
+        // clicking on a cell should come here
+        console.log("changing active cell");
 
         let newActiveCell = 0,
             allPrevWords = 0,
@@ -226,13 +229,16 @@ export default class Crossword extends Component {
 
         newActiveCell = allPrevWords + allCurWordChars;
 
-        this.setState((prevState) => ({
-            data: {
-                ...this.state.data,
-                currentFocus: newActiveCell,
-                currentWord: activeCell.wordNum
-            }
-        }));
+        this.setState(
+            (prevState) => ({
+                data: {
+                    ...this.state.data,
+                    currentFocus: newActiveCell,
+                    currentWord: activeCell.wordNum
+                }
+            }),
+            console.log("Active Cell, Current Word Changed")
+        );
     };
 
     addToRefs = (ref) => {
@@ -252,8 +258,8 @@ export default class Crossword extends Component {
                     ...this.state.data,
                     currentWord: neWord
                 }
-            }),
-            console.log("CWhandleNewCurrentWord", neWord)
+            })
+            // console.log("CWhandleNewCurrentWord", neWord)
         );
     };
 

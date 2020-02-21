@@ -23,7 +23,7 @@ export default class Grid extends Component {
                 { currentWord: this.props.currentWord, wordsLoaded: false },
                 console.log("GcDu -->", this.props.currentWord)
             );
-            // this.props.handleNewCurrentWord(this.props.currentWord); ???
+            this.props.handleNewCurrentWord(this.props.currentWord);
         }
 
         if (
@@ -58,7 +58,6 @@ export default class Grid extends Component {
 
     // empty cells
     componentDidMount() {
-        console.log("G cdm", this.props.currentWord);
         let width = this.props.data.width;
         let height = this.props.data.height;
         let newGrid = [];
@@ -66,7 +65,7 @@ export default class Grid extends Component {
         for (let i = 1; i < width; i++) {
             for (let j = 1; j < height; j++) {
                 newGrid.push(
-                    <Cell x={i} y={j} value={""} key={Math.random()} />
+                    <Cell x={i} y={j} value="-" key={Math.random()} />
                 );
             }
         }
