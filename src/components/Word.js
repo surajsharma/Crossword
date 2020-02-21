@@ -16,10 +16,10 @@ export default class Word extends Component {
         };
     }
 
-    // static getDerivedStateFromProps() {
-    //     console.log("Static method called");
-    //     return null;
-    // }
+    static getDerivedStateFromProps() {
+        console.log("Static method called");
+        return null;
+    }
 
     componentDidMount() {
         let cells = [];
@@ -29,6 +29,7 @@ export default class Word extends Component {
             cells.push(
                 <React.Fragment key={this.props.word + index}>
                     <Cell
+                        value={this.props.word[index]}
                         index={index}
                         number={index === 0 ? this.props.number + 1 : null}
                         wordNum={this.props.number}

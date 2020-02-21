@@ -147,8 +147,26 @@ export default class Crossword extends Component {
     };
 
     clearEverything = () => {
-        console.log("clear everything and rerender from scratch");
+        // console.log("clear everything and rerender from scratch");
         // this.setState({ data: null });
+
+        this.setState(
+            (prevState) => ({
+                data: {
+                    ...this.state.data,
+                    attempts: [],
+                    currentFocus: 0,
+                    currentWord: null
+                }
+            }),
+            console.log("Clear")
+        );
+
+        let newRefs = [];
+
+        for (let i = 0; i < this.state.data.numberOfWords; i++) {
+            console.log(this.state.data.refs[i].current);
+        }
     };
 
     handleClueClick = (e, index) => {
@@ -175,14 +193,6 @@ export default class Crossword extends Component {
         const { currentFocus, refs } = this.state.data;
         let nextCell = 0;
 
-        // console.log(
-        //     "move to next cell",
-        //     currentWord,
-        //     currentFocus,
-        //     allPrevWords,
-        //     nextCell
-        // );
-
         if (currentFocus < refs.length - 1) {
             if (backwards) {
                 nextCell = currentFocus - 1 || 0;
@@ -204,7 +214,7 @@ export default class Crossword extends Component {
     };
 
     changeActiveCell = (activeCell) => {
-        // activeCell = {index: 0, wordNum: 0}
+        // activeCell = { index: 0, wordNum: 0 };
 
         let newActiveCell = 0,
             allPrevWords = 0,
@@ -282,12 +292,26 @@ export default class Crossword extends Component {
                         );
                     })}
                     <div className="buttons">
-                        <button onClick={this.checkThis}>Check This</button>
-                        <button onClick={this.revealThis}>Reveal This</button>
-                        <button onClick={this.clearThis}>Clear This</button>
-                        <button onClick={this.checkAnswers}>Check All</button>
-                        <button onClick={this.revealAll}>Reveal All</button>
-                        <button onClick={this.clearEverything}>
+                        <button className="button" onClick={this.checkThis}>
+                            Check This
+                        </button>
+                        <button className="button" onClick={this.revealThis}>
+                            Reveal This
+                        </button>
+                        <button className="button" onClick={this.clearThis}>
+                            Clear This
+                        </button>
+
+                        <button className="button" onClick={this.checkAnswers}>
+                            Check All
+                        </button>
+                        <button className="button" onClick={this.revealAll}>
+                            Reveal All
+                        </button>
+                        <button
+                            className="button"
+                            onClick={this.clearEverything}
+                        >
                             Clear All
                         </button>
                     </div>
