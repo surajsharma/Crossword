@@ -9,7 +9,6 @@ export default class Grid extends Component {
         super(props);
         this.state = {
             grid: [],
-            solvedWords: [],
             words: [],
             wordsLoaded: false,
             currentWord: this.props.currentWord
@@ -23,6 +22,20 @@ export default class Grid extends Component {
                 currentWord: this.props.currentWord,
                 wordsLoaded: false
             });
+        }
+
+        if (this.props.data.revealedWords !== prevProps.data.revealedWords) {
+            this.setState(
+                {
+                    revealedWords: this.props.data.revealedWords,
+                    wordsLoaded: false
+                },
+                console.log(
+                    this.props.data.revealedWords.indexOf(
+                        this.state.currentWord
+                    )
+                )
+            );
         }
 
         if (
@@ -44,6 +57,7 @@ export default class Grid extends Component {
                     moveToNextCell={this.props.moveToNextCell}
                     changeActiveCell={this.props.changeActiveCell}
                     currentWord={this.props.currentWord}
+                    revealedWords={this.props.data.revealedWords}
                 />
             ));
             this.setState({
@@ -87,8 +101,6 @@ export default class Grid extends Component {
     };
 
     render() {
-        // console.log(this.props.currentWord);
-
         const dim =
             "0 0 " +
             (10 * this.props.data.width + 3) +

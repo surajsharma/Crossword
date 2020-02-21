@@ -7,7 +7,8 @@ export default class Cell extends Component {
         this.state = {
             inputVal: "",
             value: "",
-            currentWord: this.props.currentWord
+            currentWord: this.props.currentWord,
+            show: false
         };
 
         this.cellRef = React.createRef();
@@ -18,12 +19,6 @@ export default class Cell extends Component {
             prevProps.currentWord !== this.props.currentWord &&
             this.props.currentWord !== null
         ) {
-            // console.log(
-            //     `Cell updated @CurrentWord props:
-            //     ${this.props.currentWord}
-            //     PrevProps CurrentWord: ${prevProps.currentWord}`
-            // );
-
             this.setState({ currentWord: this.props.currentWord });
         }
     }
@@ -35,15 +30,17 @@ export default class Cell extends Component {
     }
 
     handleFocus = () => {
-        this.setState({ editing: !this.state.editing });
-        this.props.changeActiveCell(
-            {
-                index: this.props.index,
-                wordNum: this.props.wordNum,
-                currentWord: this.props.wordNum
-            },
-            console.log()
-        );
+        if (this.props.value !== "-") {
+            this.setState({ editing: !this.state.editing });
+            this.props.changeActiveCell(
+                {
+                    index: this.props.index,
+                    wordNum: this.props.wordNum,
+                    currentWord: this.props.wordNum
+                },
+                console.log()
+            );
+        }
     };
 
     handleBlur = () => {
@@ -123,7 +120,7 @@ export default class Cell extends Component {
                         dominantBaseline="middle"
                         textAnchor="middle"
                     >
-                        {this.state.value}
+                        {this.props.show ? this.props.answer : this.state.value}
                     </text>
                 </g>
                 {this.props.value === "" ? null : input}

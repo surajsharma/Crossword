@@ -14,11 +14,11 @@ export default class Crossword extends Component {
                 clues: [],
                 answers: [],
                 attempts: [],
-                numberOfWords: 0,
                 refs: [],
+                revealedWords: [],
                 currentFocus: 0,
-                currentWord: null,
-                reset: false
+                numberOfWords: 0,
+                currentWord: null
             }
         };
     }
@@ -165,6 +165,36 @@ export default class Crossword extends Component {
         // );
     };
 
+    checkThis = () => {
+        console.log("checkthis");
+    };
+
+    revealThis = () => {
+        let newRevealedWords = [];
+        if (
+            this.state.data.currentWord !== null &&
+            this.state.data.revealedWords.indexOf(
+                this.state.data.currentWord
+            ) === -1
+        ) {
+            console.log("reveal this", this.state.data.currentWord);
+            newRevealedWords.push(this.state.data.currentWord);
+            this.setState((prevState) => ({
+                data: {
+                    ...this.state.data,
+                    revealedWords: [
+                        ...this.state.data.revealedWords,
+                        this.state.data.currentWord
+                    ]
+                }
+            }));
+        }
+    };
+
+    clearThis = () => {};
+
+    revealAll = () => {};
+
     handleClueClick = (e, index) => {
         let startingCell = 0;
 
@@ -260,6 +290,11 @@ export default class Crossword extends Component {
                         changeActiveCell={this.changeActiveCell}
                         currentWord={this.state.data.currentWord}
                         handleNewCurrentWord={this.handleNewCurrentWord}
+                        revealCurrentWord={this.revealThis}
+                        checkCurrentWord={this.checkThis}
+                        clearCurrentWord={this.clearThis}
+                        revealAllWords={this.revealAll}
+                        clearAllWords={this.clearEverything}
                     ></Grid>
                     {this.state.data.clues.map((clue, index) => {
                         return (
@@ -300,7 +335,7 @@ export default class Crossword extends Component {
                             Reveal All
                         </button>
                         <button
-                            className="button"
+                            className="button clear-all"
                             onClick={this.clearEverything}
                         >
                             Clear All

@@ -12,18 +12,15 @@ export default class Word extends Component {
             cells: [],
             editing: this.props.currentWord === this.props.index,
             value: " ",
-            currentWord: null
+            currentWord: null,
+            show: false
         };
     }
-
-    // static getDerivedStateFromProps() {
-    //     console.log("Static method called");
-    //     return null;
-    // }
 
     componentDidMount() {
         let cells = [];
         const splitWord = this.props.word.split("");
+        let show = this.props.revealedWords.includes(this.props.number);
 
         splitWord.forEach((element, index) => {
             cells.push(
@@ -49,6 +46,7 @@ export default class Word extends Component {
                         addToRefs={this.props.addToRefs}
                         moveToNextCell={this.props.moveToNextCell}
                         changeActiveCell={this.props.changeActiveCell}
+                        show={show}
                     />
                 </React.Fragment>
             );
@@ -57,10 +55,15 @@ export default class Word extends Component {
         this.setState({ cells: cells, currentWord: this.props.currentWord });
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps, prevState) {
+        // console.log(this.props.revealed);
+
         if (prevProps !== this.props) {
             let cells = [];
             const splitWord = this.props.word.split("");
+            let show = this.props.revealedWords.includes(this.props.number);
+
+            console.log(show);
 
             splitWord.forEach((element, index) => {
                 cells.push(
@@ -86,6 +89,7 @@ export default class Word extends Component {
                             addToRefs={this.props.addToRefs}
                             moveToNextCell={this.props.moveToNextCell}
                             changeActiveCell={this.props.changeActiveCell}
+                            show={show}
                         />
                     </React.Fragment>
                 );
@@ -93,11 +97,14 @@ export default class Word extends Component {
 
             this.setState({
                 cells: cells,
-                currentWord: this.props.currentWord
+                currentWord: this.props.currentWord,
+                show: show
             });
         }
         //is called for each word on re render
         const { solved, solution } = this.state;
+        let show = this.props.revealedWords.includes(this.props.number);
+
         // console.log(solved, solution);
 
         if (this.state.solved.length === solution.length) {
@@ -105,7 +112,8 @@ export default class Word extends Component {
                 {
                     value: solved,
                     number: this.props.number,
-                    currentWord: this.props.currentWord
+                    currentWord: this.props.currentWord,
+                    show: show
                 }
                 // console.log("WcDu -->", this.props.currentWord)
             );
@@ -121,13 +129,10 @@ export default class Word extends Component {
 
     handleWordChange = (tuple) => {
         //called by Cell handleChange
-        // console.log("word handleWordChange", tuple, this.props);
-
         let { tuples, indices, solved } = this.state;
 
         if (this.state.indices.indexOf(tuple.index) === -1) {
             //if incoming indice is empty
-
             this.setState(
                 {
                     tuples: [...tuples, tuple],

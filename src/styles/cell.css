@@ -51,14 +51,15 @@
 }
 
 .editing {
-    background-color: rgba(0, 20, 15, 0.8);
-    color: rgba(0, 200, 150, 0.9);
+    background-color: rgba(100, 220, 15, 0.8);
+    color: rgba(0, 20, 15, 0.9);
 }
 
 li {
     margin-left: 10px;
     padding: 2px;
     text-align: left;
+    font-size: small;
 }
 
 .buttons {
@@ -71,9 +72,9 @@ li {
 
 .button {
     text-align: center;
-    padding: 10px 15px;
+    padding: 5px 7px;
     margin: 5px;
-    font-size: 12px;
+    font-size: 14px;
     background-color: #efefef;
     border-radius: 30px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -81,5 +82,17 @@ li {
 }
 
 .button:hover {
-    background-color: rgba(0, 200, 150, 0.3);
+    background-color: rgba(0, 200, 250, 0.5);
+}
+
+.buttons {
+    background-color: rgba(0, 200, 250, 0.5);
+    position: fixed;
+    bottom: 0;
+}
+
+.clear-all {
+    background-color: rgba(255, 0, 43, 0.8);
+    border: 1px solid rgba(163, 38, 58, 1);
+    color: white;
 }
