@@ -21,6 +21,7 @@ export default class Word extends Component {
         let cells = [];
         const splitWord = this.props.word.split("");
         let show = this.props.revealedWords.includes(this.props.number);
+        let clear = this.props.clearNext === this.props.number;
 
         splitWord.forEach((element, index) => {
             cells.push(
@@ -47,6 +48,7 @@ export default class Word extends Component {
                         moveToNextCell={this.props.moveToNextCell}
                         changeActiveCell={this.props.changeActiveCell}
                         show={show}
+                        clear={clear}
                     />
                 </React.Fragment>
             );
@@ -60,6 +62,7 @@ export default class Word extends Component {
             let cells = [];
             const splitWord = this.props.word.split("");
             let show = this.props.revealedWords.includes(this.props.number);
+            let clear = this.props.clearNext === this.props.number;
 
             splitWord.forEach((element, index) => {
                 cells.push(
@@ -86,7 +89,7 @@ export default class Word extends Component {
                             moveToNextCell={this.props.moveToNextCell}
                             changeActiveCell={this.props.changeActiveCell}
                             show={show}
-                            clearNext={this.props.clearNext}
+                            clear={clear}
                         />
                     </React.Fragment>
                 );

@@ -14,6 +14,9 @@ export default class Cell extends Component {
     }
 
     componentDidUpdate(prevProps) {
+        if (this.props.clear && prevProps.clear !== this.props.clear) {
+            this.setState({ value: "" });
+        }
         if (
             prevProps.currentWord !== this.props.currentWord &&
             this.props.currentWord !== null
@@ -123,7 +126,7 @@ export default class Cell extends Component {
                         {this.props.show ? this.props.answer : this.state.value}
                     </text>
                 </g>
-                {this.props.value === "" ? null : input}
+                {this.props.value === "-" ? null : input}
             </svg>
         );
     }

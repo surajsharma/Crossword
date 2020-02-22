@@ -18,25 +18,15 @@ export default class Grid extends Component {
     componentDidUpdate(prevProps) {
         let words = [];
 
-        if (prevProps.currentWord !== this.props.currentWord) {
+        if (
+            prevProps.currentWord !== this.props.currentWord ||
+            this.props.data.revealedWords !== prevProps.data.revealedWords ||
+            this.props.data.clearNext !== prevProps.data.clearNext ||
+            this.props.data.attempts !== prevProps.data.attempts
+        ) {
             this.setState({
-                currentWord: this.props.currentWord,
                 wordsLoaded: false
             });
-        }
-
-        if (this.props.data.revealedWords !== prevProps.data.revealedWords) {
-            this.setState(
-                {
-                    revealedWords: this.props.data.revealedWords,
-                    wordsLoaded: false
-                }
-                // console.log(
-                //     this.props.data.revealedWords.indexOf(
-                //         this.state.currentWord
-                //     )
-                // )
-            );
         }
 
         if (

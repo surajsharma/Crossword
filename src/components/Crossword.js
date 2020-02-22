@@ -207,21 +207,52 @@ export default class Crossword extends Component {
                 // console.log(revealedWords, currentWord)
             );
         } else {
+            //word not revealed, it is either being edited or has become an attempt
+            //check if word has become attempt, then remove attempt
+            let atIndex = attempts.indexOf(
+                attempts.find((word) => word.number === currentWord)
+            );
+
+            if (atIndex !== -1) {
+                console.log(atIndex);
+
+                let newAttempts = attempts.filter((attempt, index) =>
+                    console.log(attempt, index)
+                );
+
+                console.log("newAttempts", newAttempts, attempts, atIndex);
+                this.setState(
+                    (prevState) => ({
+                        data: {
+                            ...this.state.data,
+                            attempts: newAttempts,
+                            clearNext: currentWord
+                        }
+                    }),
+                    console.log("cleared attempt", currentWord)
+                );
+            }
+
             if (all === true) {
                 //remove all revealed + solved
                 attempts.forEach((attempt) =>
                     console.log(`Word to clear = ${attempt}`, attempt)
                 );
 
-                this.setState((prevState) => ({
-                    data: {
-                        ...this.state.data,
-                        revealedWords: [],
-                        attempts: [],
-                        clearNext: null,
-                        currentWord: null
-                    }
-                }));
+                let emptyArray = [];
+
+                this.setState(
+                    (prevState) => ({
+                        data: {
+                            ...this.state.data,
+                            revealedWords: emptyArray,
+                            attempts: emptyArray,
+                            clearNext: null,
+                            currentWord: null
+                        }
+                    }),
+                    console.log("All Reset")
+                );
             }
         }
     };
@@ -313,6 +344,12 @@ export default class Crossword extends Component {
         }));
     };
 
+    dumpDebugData = (e) => {
+        e.preventDefault();
+        const d = e.target.innerHTML;
+        console.log(`=${d}=`, this.state.data[d]);
+    };
+
     render() {
         if (this.state.data.wordList.length > 0) {
             return (
@@ -365,7 +402,6 @@ export default class Crossword extends Component {
                         <button className="button" onClick={this.clearThis}>
                             Clear This
                         </button>
-
                         <button
                             className="button check-all"
                             onClick={this.checkAnswers}
@@ -381,6 +417,34 @@ export default class Crossword extends Component {
                         >
                             Clear All
                         </button>
+
+                        <div id="debugger">
+                            <div id="mydivheader">[Debugger]</div>
+                            <button
+                                className="dbg-button"
+                                onClick={this.dumpDebugData}
+                            >
+                                revealedWords
+                            </button>
+                            <button
+                                className="dbg-button"
+                                onClick={this.dumpDebugData}
+                            >
+                                attempts
+                            </button>
+                            <button
+                                className="dbg-button"
+                                onClick={this.dumpDebugData}
+                            >
+                                currentFocus
+                            </button>
+                            <button
+                                className="dbg-button"
+                                onClick={this.dumpDebugData}
+                            >
+                                currentWord
+                            </button>
+                        </div>
                     </div>
                 </div>
             );
