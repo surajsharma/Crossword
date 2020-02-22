@@ -19,7 +19,8 @@ export default class Crossword extends Component {
                 currentFocus: 0,
                 numberOfWords: 0,
                 currentWord: null,
-                clearNext: null
+                clearNext: null,
+                debug: true
             }
         };
     }
@@ -185,76 +186,80 @@ export default class Crossword extends Component {
 
     clearThis = (all) => {
         const { revealedWords, currentWord, attempts } = this.state.data;
-        //remove last revealed,
+
+        // remove last revealed,
         // check if currentWord is in revealedWords, if so, remove, setState
         // check if currentWord is solved, if so, unsolve, setState
 
-        if (revealedWords.includes(currentWord) && all !== true) {
-            //ONLY clear this (where this is the last revealed word)
-            revealedWords.pop();
-            let newRevealedWords = revealedWords.splice(
-                revealedWords.indexOf(currentWord),
-                1
-            );
-            this.setState(
-                (prevState) => ({
-                    data: {
-                        ...this.state.data,
-                        revealedWords: newRevealedWords,
-                        clearNext: currentWord
-                    }
-                })
-                // console.log(revealedWords, currentWord)
-            );
-        } else {
-            //word not revealed, it is either being edited or has become an attempt
-            //check if word has become attempt, then remove attempt
-            let atIndex = attempts.indexOf(
-                attempts.find((word) => word.number === currentWord)
-            );
+        // if (revealedWords.includes(currentWord) && all !== true) {
+        //     //ONLY clear this (where this is the last revealed word)
+        //     revealedWords.pop();
 
-            if (atIndex !== -1) {
-                console.log(atIndex);
+        //     let newRevealedWords = revealedWords.splice(
+        //         revealedWords.indexOf(currentWord),
+        //         1
+        //     );
 
-                let newAttempts = attempts.filter((attempt, index) =>
-                    console.log(attempt, index)
-                );
+        //     this.setState(
+        //         (prevState) => ({
+        //             data: {
+        //                 ...this.state.data,
+        //                 revealedWords: newRevealedWords,
+        //                 clearNext: currentWord
+        //             }
+        //         })
+        //         // console.log(revealedWords, currentWord)
+        //     );
 
-                console.log("newAttempts", newAttempts, attempts, atIndex);
-                this.setState(
-                    (prevState) => ({
-                        data: {
-                            ...this.state.data,
-                            attempts: newAttempts,
-                            clearNext: currentWord
-                        }
-                    }),
-                    console.log("cleared attempt", currentWord)
-                );
-            }
+        // } else {
+        //     //word not revealed, it is either being edited or has become an attempt
+        //     //check if word has become attempt, then remove attempt
 
-            if (all === true) {
-                //remove all revealed + solved
-                attempts.forEach((attempt) =>
-                    console.log(`Word to clear = ${attempt}`, attempt)
-                );
+        //     let atIndex = attempts.indexOf(
+        //         attempts.find((word) => word.number === currentWord)
+        //     );
 
-                let emptyArray = [];
+        //     if (atIndex !== -1) {
+        //         console.log(atIndex);
 
-                this.setState(
-                    (prevState) => ({
-                        data: {
-                            ...this.state.data,
-                            revealedWords: emptyArray,
-                            attempts: emptyArray,
-                            clearNext: null,
-                            currentWord: null
-                        }
-                    }),
-                    console.log("All Reset")
-                );
-            }
-        }
+        //         let newAttempts = attempts.filter((attempt, index) =>
+        //             console.log(attempt, index)
+        //         );
+
+        //         console.log("newAttempts", newAttempts, attempts, atIndex);
+        //         this.setState(
+        //             (prevState) => ({
+        //                 data: {
+        //                     ...this.state.data,
+        //                     attempts: newAttempts,
+        //                     clearNext: currentWord
+        //                 }
+        //             }),
+        //             console.log("cleared attempt", currentWord)
+        //         );
+        //     }
+
+        //     if (all === true) {
+        //         //remove all revealed + solved
+        //         attempts.forEach((attempt, index) => {
+        //             attempts[index] = null;
+
+        //             console.log(`Word to clear = ${attempt}`, attempt);
+        //             this.setState(
+        //                 (prevState) => ({
+        //                     data: {
+        //                         ...this.state.data,
+        //                         revealedWords: [],
+        //                         attempts: [],
+        //                         clearNext: attempt.number,
+        //                         currentWord: null
+        //                     }
+        //                 }),
+        //                 console.log("All Reset")
+        //             );
+        //         });
+        //     }
+        // }
     };
 
     revealAll = () => {
@@ -355,6 +360,7 @@ export default class Crossword extends Component {
             return (
                 <div className="CW-container">
                     <Grid
+                        className="grid"
                         data={this.state.data}
                         addSolvedWord={this.addSolvedWord}
                         addToRefs={this.addToRefs}

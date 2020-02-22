@@ -1,10 +1,18 @@
+#root {
+}
+
 .CW-container {
-    background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+    background-image: linear-gradient(to bottom, #cfd9df 0%, #e2ebf0 100%);
+    /* border: 1px solid #c9ccd3; */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* width: 80vw; */
 }
 
 .grid_container {
-    margin: 0 auto;
-    text-align: center;
+    /* margin: 0 auto;
+    text-align: center; */
 }
 
 *:focus {
@@ -49,10 +57,7 @@
 }
 
 li {
-    margin-left: 10px;
-    padding: 2px;
-    text-align: left;
-    font-size: small;
+    padding: 8px;
 }
 
 .button {
@@ -85,13 +90,12 @@ li {
 } */
 
 .buttons {
-    width: 100vw;
-    margin-top: 10px;
+    margin-top: auto; /*sticky to bottom*/
+
     padding: 5px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-
     background: #c9ccd3;
     background-image: linear-gradient(
         -180deg,
@@ -99,8 +103,6 @@ li {
         rgba(0, 0, 0, 0.5) 100%
     );
     background-blend-mode: lighten;
-    position: fixed;
-    bottom: 0;
     -webkit-box-shadow: 0px -6px 29px -7px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 0px -6px 29px -7px rgba(0, 0, 0, 0.2);
     box-shadow: 0px -6px 29px -7px rgba(0, 0, 0, 0.2);
@@ -121,9 +123,8 @@ li {
 
 .clues {
     padding: 5px;
-    height: inherit;
     overflow: scroll;
-    height: 30vh;
+    /* border: 1px solid #c9ccd3; */
 }
 
 #debugger {
@@ -136,4 +137,12 @@ li {
     border-radius: 4px;
     padding: 3px;
     font-size: 9px;
+}
+
+.grid {
+    border: 1px solid red;
+}
+
+.hide {
+    display: none;
 }
