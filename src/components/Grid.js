@@ -18,12 +18,6 @@ export default class Grid extends Component {
     componentDidUpdate(prevProps) {
         let words = [];
 
-        if (prevProps.data.clearNext !== this.props.data.clearNext) {
-            console.log("G clear word", this.props.data.clearNext);
-
-            this.setState({ wordsLoaded: false });
-        }
-
         if (prevProps.currentWord !== this.props.currentWord) {
             this.setState({
                 currentWord: this.props.currentWord,

@@ -147,7 +147,9 @@ export default class Crossword extends Component {
         }
     };
 
-    clearEverything = () => {};
+    clearEverything = () => {
+        this.clearThis(true);
+    };
 
     checkThis = () => {
         console.log("checkthis");
@@ -167,53 +169,61 @@ export default class Crossword extends Component {
                     revealedWords: newRevealedWords
                 }
             }));
-        }
-
-        if (
-            this.state.data.currentWord !== null &&
-            this.state.data.revealedWords.indexOf(
-                this.state.data.currentWord
-            ) === -1
-        ) {
-            // console.log("reveal this", this.state.data.currentWord);
-            newRevealedWords.push(this.state.data.currentWord);
-            this.setState((prevState) => ({
-                data: {
-                    ...this.state.data,
-                    revealedWords: [
-                        ...this.state.data.revealedWords,
-                        this.state.data.currentWord
-                    ]
-                }
-            }));
+        } else {
+            if (
+                this.state.data.currentWord !== null &&
+                this.state.data.revealedWords.indexOf(
+                    this.state.data.currentWord
+                ) === -1
+            ) {
+                // console.log("reveal this", this.state.data.currentWord);
+                newRevealedWords.push(this.state.data.currentWord);
+                this.setState((prevState) => ({
+                    data: {
+                        ...this.state.data,
+                        revealedWords: [
+                            ...this.state.data.revealedWords,
+                            this.state.data.currentWord
+                        ]
+                    }
+                }));
+            }
         }
     };
 
     clearThis = (all) => {
         const { revealedWords, currentWord } = this.state.data;
-        if (all) {
-            //remove all revealed + solved
-        }
-
         //remove last revealed,
         // check if currentWord is in revealedWords, if so, remove, setState
         // check if currentWord is solved, if so, unsolve, setState
 
-        if (revealedWords.includes(currentWord)) {
-            console.log(revealedWords, currentWord);
+        if (revealedWords.includes(currentWord) && all !== true) {
             revealedWords.pop();
-
-            // let newRevealedWords = revealedWords.splice(
-            //     revealedWords.indexOf(currentWord),
-            //     1
-            // );
-
-            this.setState((prevState) => ({
-                data: {
-                    ...this.state.data,
-                    revealedWords: revealedWords
-                }
-            }));
+            let newRevealedWords = revealedWords.splice(
+                revealedWords.indexOf(currentWord),
+                1
+            );
+            this.setState(
+                (prevState) => ({
+                    data: {
+                        ...this.state.data,
+                        revealedWords: newRevealedWords,
+                        clearNext: currentWord
+                    }
+                }),
+                console.log(revealedWords, currentWord)
+            );
+        } else {
+            if (all === true) {
+                //remove all revealed + solved
+                this.setState((prevState) => ({
+                    data: {
+                        ...this.state.data,
+                        revealedWords: [],
+                        clearNext: null
+                    }
+                }));
+            }
         }
     };
 
@@ -357,7 +367,10 @@ export default class Crossword extends Component {
                             Clear This
                         </button>
 
-                        <button className="button" onClick={this.checkAnswers}>
+                        <button
+                            className="button check-all"
+                            onClick={this.checkAnswers}
+                        >
                             Check All
                         </button>
                         <button className="button" onClick={this.revealAll}>
