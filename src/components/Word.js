@@ -60,7 +60,7 @@ export default class Word extends Component {
             let cells = [];
             const splitWord = this.props.word.split("");
             let show = this.props.revealedWords.includes(this.props.number);
-            console.log(show);
+
             splitWord.forEach((element, index) => {
                 cells.push(
                     <React.Fragment key={this.props.word + index}>

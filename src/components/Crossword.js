@@ -52,14 +52,6 @@ export default class Crossword extends Component {
             });
     }
 
-    componentDidUpdate(prevState) {
-        if (prevState !== this.state) {
-            if (this.state.data.reset) {
-                console.log("reset");
-            }
-        }
-    }
-
     addSolvedWord = (tuple) => {
         let { attempts } = this.state.data;
         let answeredIndices = [];
@@ -192,12 +184,13 @@ export default class Crossword extends Component {
     };
 
     clearThis = (all) => {
-        const { revealedWords, currentWord } = this.state.data;
+        const { revealedWords, currentWord, attempts } = this.state.data;
         //remove last revealed,
         // check if currentWord is in revealedWords, if so, remove, setState
         // check if currentWord is solved, if so, unsolve, setState
 
         if (revealedWords.includes(currentWord) && all !== true) {
+            //ONLY clear this (where this is the last revealed word)
             revealedWords.pop();
             let newRevealedWords = revealedWords.splice(
                 revealedWords.indexOf(currentWord),
@@ -210,17 +203,23 @@ export default class Crossword extends Component {
                         revealedWords: newRevealedWords,
                         clearNext: currentWord
                     }
-                }),
-                console.log(revealedWords, currentWord)
+                })
+                // console.log(revealedWords, currentWord)
             );
         } else {
             if (all === true) {
                 //remove all revealed + solved
+                attempts.forEach((attempt) =>
+                    console.log(`Word to clear = ${attempt}`, attempt)
+                );
+
                 this.setState((prevState) => ({
                     data: {
                         ...this.state.data,
                         revealedWords: [],
-                        clearNext: null
+                        attempts: [],
+                        clearNext: null,
+                        currentWord: null
                     }
                 }));
             }
