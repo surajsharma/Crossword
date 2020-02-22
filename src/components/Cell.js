@@ -7,8 +7,7 @@ export default class Cell extends Component {
         this.state = {
             inputVal: "",
             value: "",
-            currentWord: this.props.currentWord,
-            show: false
+            currentWord: this.props.currentWord
         };
 
         this.cellRef = React.createRef();
@@ -63,9 +62,10 @@ export default class Cell extends Component {
 
     render() {
         // console.log(this.props.value, "cell render");
+
         const style =
             this.props.value === "-"
-                ? "rgb(10, 10, 10)"
+                ? "rgba(0, 0, 0, 0.85)"
                 : this.props.currentWord === this.props.wordNum
                 ? "rgb(200,200,0)"
                 : "rgb(200, 200, 200)";

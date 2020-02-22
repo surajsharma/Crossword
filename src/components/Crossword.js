@@ -18,7 +18,8 @@ export default class Crossword extends Component {
                 revealedWords: [],
                 currentFocus: 0,
                 numberOfWords: 0,
-                currentWord: null
+                currentWord: null,
+                clearNext: null
             }
         };
     }
@@ -130,11 +131,6 @@ export default class Crossword extends Component {
                     answers[attempt.number].word === attempt.word &&
                     answers[index].number === attempt.number
                 ) {
-                    // console.log(
-                    //     `${attempt.word} : ${attempt.number} - ${
-                    //         answers[attempt.number].word
-                    //     }: ${answers[index].number}`
-                    // );
                     score += 1;
                 }
             });
@@ -151,19 +147,7 @@ export default class Crossword extends Component {
         }
     };
 
-    clearEverything = () => {
-        // console.log("clear everything and rerender from scratch");
-        // this.setState({ data: null });
-        // this.setState(
-        //     (prevState) => ({
-        //         data: {
-        //             ...this.state.data,
-        //             reset: !this.state.data.reset
-        //         }
-        //     }),
-        //     console.log("Clear")
-        // );
-    };
+    clearEverything = () => {};
 
     checkThis = () => {
         console.log("checkthis");
@@ -172,7 +156,7 @@ export default class Crossword extends Component {
     revealThis = (all) => {
         let newRevealedWords = [];
 
-        if (all) {
+        if (all === true) {
             this.state.data.wordList.forEach((data, index) =>
                 newRevealedWords.push(index)
             );
@@ -191,7 +175,7 @@ export default class Crossword extends Component {
                 this.state.data.currentWord
             ) === -1
         ) {
-            console.log("reveal this", this.state.data.currentWord);
+            // console.log("reveal this", this.state.data.currentWord);
             newRevealedWords.push(this.state.data.currentWord);
             this.setState((prevState) => ({
                 data: {
@@ -205,7 +189,33 @@ export default class Crossword extends Component {
         }
     };
 
-    clearThis = () => {};
+    clearThis = (all) => {
+        const { revealedWords, currentWord } = this.state.data;
+        if (all) {
+            //remove all revealed + solved
+        }
+
+        //remove last revealed,
+        // check if currentWord is in revealedWords, if so, remove, setState
+        // check if currentWord is solved, if so, unsolve, setState
+
+        if (revealedWords.includes(currentWord)) {
+            console.log(revealedWords, currentWord);
+            revealedWords.pop();
+
+            // let newRevealedWords = revealedWords.splice(
+            //     revealedWords.indexOf(currentWord),
+            //     1
+            // );
+
+            this.setState((prevState) => ({
+                data: {
+                    ...this.state.data,
+                    revealedWords: revealedWords
+                }
+            }));
+        }
+    };
 
     revealAll = () => {
         this.revealThis(true);
@@ -312,27 +322,30 @@ export default class Crossword extends Component {
                         revealAllWords={this.revealAll}
                         clearAllWords={this.clearEverything}
                     ></Grid>
-                    {this.state.data.clues.map((clue, index) => {
-                        return (
-                            <div
-                                className={
-                                    this.state.data.currentWord === index
-                                        ? "clue editing"
-                                        : "clue "
-                                }
-                                key={clue}
-                            >
-                                <li
-                                    onClick={(e) =>
-                                        this.handleClueClick(e, index)
+                    <div className="clues">
+                        {this.state.data.clues.map((clue, index) => {
+                            return (
+                                <div
+                                    className={
+                                        this.state.data.currentWord === index
+                                            ? "clue editing"
+                                            : "clue "
                                     }
+                                    key={clue}
                                 >
-                                    {clue}&nbsp;(
-                                    {this.state.data.wordList[index].length})
-                                </li>
-                            </div>
-                        );
-                    })}
+                                    <li
+                                        onClick={(e) =>
+                                            this.handleClueClick(e, index)
+                                        }
+                                    >
+                                        {clue}&nbsp;(
+                                        {this.state.data.wordList[index].length}
+                                        )
+                                    </li>
+                                </div>
+                            );
+                        })}
+                    </div>
                     <div className="buttons">
                         <button className="button" onClick={this.checkThis}>
                             Check This
@@ -360,7 +373,7 @@ export default class Crossword extends Component {
                 </div>
             );
         } else {
-            return <p>Loading...</p>;
+            return <div>Loading...</div>;
         }
     }
 }

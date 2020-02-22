@@ -17,6 +17,13 @@ export default class Grid extends Component {
 
     componentDidUpdate(prevProps) {
         let words = [];
+
+        if (prevProps.data.clearNext !== this.props.data.clearNext) {
+            console.log("G clear word", this.props.data.clearNext);
+
+            this.setState({ wordsLoaded: false });
+        }
+
         if (prevProps.currentWord !== this.props.currentWord) {
             this.setState({
                 currentWord: this.props.currentWord,
@@ -29,12 +36,12 @@ export default class Grid extends Component {
                 {
                     revealedWords: this.props.data.revealedWords,
                     wordsLoaded: false
-                },
-                console.log(
-                    this.props.data.revealedWords.indexOf(
-                        this.state.currentWord
-                    )
-                )
+                }
+                // console.log(
+                //     this.props.data.revealedWords.indexOf(
+                //         this.state.currentWord
+                //     )
+                // )
             );
         }
 
@@ -57,6 +64,7 @@ export default class Grid extends Component {
                     moveToNextCell={this.props.moveToNextCell}
                     changeActiveCell={this.props.changeActiveCell}
                     currentWord={this.props.currentWord}
+                    clearNext={this.props.data.clearNext}
                     revealedWords={this.props.data.revealedWords}
                 />
             ));
