@@ -3,6 +3,7 @@ import "../styles/cell.css";
 
 export default class Cell extends Component {
     constructor(props) {
+        // console.log("Cell-constructor");
         super(props);
         this.state = {
             inputVal: "",
@@ -14,11 +15,14 @@ export default class Cell extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.clear && prevProps.clear !== this.props.clear) {
-            if (this.props.wordNum === this.props.currentWord) {
-                this.setState({ value: "" }, console.log("clearing cell"));
+        // console.log("Cell-componentDidUpdate");
+        if (this.props !== prevProps) {
+            if (this.props.clear === this.props.wordNum) {
+                this.setState({ value: "" });
+                this.props.deleteClearedWord(this.props.wordNum);
             }
         }
+
         if (
             prevProps.currentWord !== this.props.currentWord &&
             this.props.currentWord !== null
@@ -28,12 +32,16 @@ export default class Cell extends Component {
     }
 
     componentDidMount() {
+        // console.log("Cell-componentDidMount");
+
         if (typeof this.props.addToRefs === "function") {
             this.props.addToRefs(this.cellRef);
         }
     }
 
     handleFocus = () => {
+        // console.log("Cell-handleFocus");
+
         if (this.props.value !== "-") {
             this.setState({ editing: !this.state.editing });
             this.props.changeActiveCell(
@@ -48,10 +56,13 @@ export default class Cell extends Component {
     };
 
     handleBlur = () => {
+        // console.log("Cell-handleBlur");
+
         this.setState({ editing: !this.state.editing });
     };
 
     handleChange = (e) => {
+        // console.log("Cell-handleChange");
         let { index, wordNum } = this.props;
         let value = e.target.value;
 
@@ -66,8 +77,7 @@ export default class Cell extends Component {
     };
 
     render() {
-        // console.log(this.props.value, "cell render");
-
+        // console.log("Cell-render", this.props.wordNum, this.props.index);
         const style =
             this.props.value === "-"
                 ? "rgba(0, 0, 0, 0.85)"

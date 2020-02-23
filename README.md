@@ -2,7 +2,7 @@
 
 #TODO
 
-4. Clear This/All (buggy)
+4. Clear This/All
 5. Smart Check (This/All)
     - This
         - get wordToCheck from attempts,
@@ -12,3 +12,9 @@
             - no, reset cell
     - All
 6. implement local / session storage
+
+#BUGS
+
+1. Clear This
+    - When currentWord is 0, nothing happens
+    - empties cells but does not delete from attempts

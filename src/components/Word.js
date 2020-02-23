@@ -3,6 +3,8 @@ import Cell from "./Cell";
 
 export default class Word extends Component {
     constructor(props) {
+        // console.log("Word-constructor");
+
         super(props);
         this.state = {
             solution: this.props.word,
@@ -18,8 +20,11 @@ export default class Word extends Component {
     }
 
     componentDidMount() {
+        // console.log("Word-cdm");
+
         let cells = [];
         const splitWord = this.props.word.split("");
+
         let show = this.props.revealedWords.includes(this.props.number);
         let clear = this.props.clearNext;
         splitWord.forEach((element, index) => {
@@ -48,6 +53,7 @@ export default class Word extends Component {
                         changeActiveCell={this.props.changeActiveCell}
                         show={show}
                         clear={clear}
+                        deleteClearedWord={this.props.deleteClearedWord}
                     />
                 </React.Fragment>
             );
@@ -56,11 +62,17 @@ export default class Word extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
+        // console.log("Word-cdu");
+
         if (prevProps !== this.props) {
             let cells = [];
             const splitWord = this.props.word.split("");
             let show = this.props.revealedWords.includes(this.props.number);
             let clear = this.props.clearNext;
+
+            if (this.props.number === clear) {
+                this.setState({ solved: [], indices: [], tuples: [] });
+            }
 
             splitWord.forEach((element, index) => {
                 cells.push(
@@ -88,6 +100,7 @@ export default class Word extends Component {
                             changeActiveCell={this.props.changeActiveCell}
                             show={show}
                             clear={clear}
+                            deleteClearedWord={this.props.deleteClearedWord}
                         />
                     </React.Fragment>
                 );
@@ -99,6 +112,7 @@ export default class Word extends Component {
                 show: show
             });
         }
+
         //is called for each word on re render
         const { solved, solution } = this.state;
         let show = this.props.revealedWords.includes(this.props.number);
@@ -118,18 +132,26 @@ export default class Word extends Component {
         }
     }
 
-    clearWord = (number) => {};
+    clearWord = (number) => {
+        console.log("Word-clearWord", number);
+    };
 
     addToRefs = (ref) => {
+        // console.log("Word-addToRefs");
         //called by Cell cDm
         this.props.addToRefs(ref);
     };
 
     handleWordChange = (tuple) => {
+        console.log("Word-handleWordChange", tuple);
+
         //called by Cell handleChange
         let { tuples, indices, solved } = this.state;
 
-        if (this.state.indices.indexOf(tuple.index) === -1) {
+        if (
+            this.state.indices.indexOf(tuple.index) === -1 &&
+            this.props.number !== this.props.clearNext
+        ) {
             //if incoming indice is empty
             this.setState(
                 {
@@ -155,6 +177,7 @@ export default class Word extends Component {
     };
 
     render() {
+        // console.log("Word-render", this.props.number);
         return this.state.cells;
     }
 }

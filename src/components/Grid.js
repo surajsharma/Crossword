@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import Cell from "./Cell";
-import "../styles/cell.css";
 import Word from "./Word";
 
-//use content loader
 export default class Grid extends Component {
     constructor(props) {
+        // console.log("Grid-constructor");
         super(props);
         this.state = {
             grid: [],
@@ -17,6 +16,7 @@ export default class Grid extends Component {
 
     componentDidUpdate(prevProps) {
         let words = [];
+        // console.log("Grid-cdu");
         if (
             prevProps.currentWord !== this.props.currentWord ||
             this.props.data.revealedWords !== prevProps.data.revealedWords ||
@@ -49,6 +49,7 @@ export default class Grid extends Component {
                     currentWord={this.props.currentWord}
                     clearNext={this.props.data.clearNext}
                     revealedWords={this.props.data.revealedWords}
+                    deleteClearedWord={this.props.deleteClearedWord}
                 />
             ));
             this.setState({
@@ -61,6 +62,8 @@ export default class Grid extends Component {
 
     // empty cells
     componentDidMount() {
+        // console.log("Grid-cdm");
+
         let width = this.props.data.width;
         let height = this.props.data.height;
         let newGrid = [];
@@ -77,6 +80,8 @@ export default class Grid extends Component {
     }
 
     handleWordChange = (tuple) => {
+        console.log("Grid-handleWordChange", tuple);
+
         //the incoming tuple is an array, needs sorting by tuple.index
         let sorted = tuple.value.slice(0);
         let word = "";
@@ -92,6 +97,8 @@ export default class Grid extends Component {
     };
 
     render() {
+        // console.log("Grid-render");
+
         const dim =
             "0 0 " +
             (10 * this.props.data.width + 3) +
