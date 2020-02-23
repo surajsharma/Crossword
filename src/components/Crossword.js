@@ -340,6 +340,37 @@ export default class Crossword extends Component {
         if (this.state.data.wordList.length > 0) {
             return (
                 <div className="CW-container" onKeyDown={this.handleKeyPress}>
+                    <div
+                        id="debugger"
+                        className={this.state.debug ? "debugger" : "hide"}
+                    >
+                        <div id="mydivheader">[Debugger]</div>
+                        <button
+                            className="dbg-button"
+                            onClick={this.dumpDebugData}
+                        >
+                            revealedWords
+                        </button>
+                        <button
+                            className="dbg-button"
+                            onClick={this.dumpDebugData}
+                        >
+                            attempts
+                        </button>
+                        <button
+                            className="dbg-button"
+                            onClick={this.dumpDebugData}
+                        >
+                            currentFocus
+                        </button>
+                        <button
+                            className="dbg-button"
+                            onClick={this.dumpDebugData}
+                        >
+                            currentWord
+                        </button>
+                    </div>
+
                     <Grid
                         className="grid"
                         data={this.state.data}
@@ -404,37 +435,6 @@ export default class Crossword extends Component {
                         >
                             Clear All
                         </button>
-
-                        <div
-                            id="debugger"
-                            className={this.state.debug ? "debugger" : "hide"}
-                        >
-                            <div id="mydivheader">[Debugger]</div>
-                            <button
-                                className="dbg-button"
-                                onClick={this.dumpDebugData}
-                            >
-                                revealedWords
-                            </button>
-                            <button
-                                className="dbg-button"
-                                onClick={this.dumpDebugData}
-                            >
-                                attempts
-                            </button>
-                            <button
-                                className="dbg-button"
-                                onClick={this.dumpDebugData}
-                            >
-                                currentFocus
-                            </button>
-                            <button
-                                className="dbg-button"
-                                onClick={this.dumpDebugData}
-                            >
-                                currentWord
-                            </button>
-                        </div>
                     </div>
                 </div>
             );
