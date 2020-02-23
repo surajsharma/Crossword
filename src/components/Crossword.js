@@ -19,11 +19,26 @@ export default class Crossword extends Component {
                 currentFocus: 0,
                 numberOfWords: 0,
                 currentWord: null,
-                clearNext: null,
-                debug: true
-            }
+                clearNext: null
+            },
+            debug: true
         };
     }
+
+    handleKeyPress = (event) => {
+        const { currentWord, numberOfWords } = this.state.data;
+
+        if (event.key === "Backspace") {
+            this.moveToNextCell(true);
+        }
+
+        if (event.key === "Tab") {
+            event.preventDefault();
+            this.handleClueClick(
+                currentWord === numberOfWords - 1 ? 0 : currentWord + 1
+            );
+        }
+    };
 
     componentDidMount() {
         const { data } = this.state;
@@ -231,7 +246,7 @@ export default class Crossword extends Component {
         this.revealThis(true);
     };
 
-    handleClueClick = (e, index) => {
+    handleClueClick = (index) => {
         let startingCell = 0;
 
         for (let i = 0; i < index; i++) {
@@ -256,8 +271,9 @@ export default class Crossword extends Component {
         let nextCell = 0;
 
         if (currentFocus < refs.length - 1) {
-            if (backwards) {
-                nextCell = currentFocus - 1 || 0;
+            if (backwards === true) {
+                console.log(currentFocus);
+                nextCell = currentFocus === 0 ? 0 : currentFocus - 1;
             } else {
                 nextCell = currentFocus + 1;
             }
@@ -323,7 +339,7 @@ export default class Crossword extends Component {
     render() {
         if (this.state.data.wordList.length > 0) {
             return (
-                <div className="CW-container">
+                <div className="CW-container" onKeyDown={this.handleKeyPress}>
                     <Grid
                         className="grid"
                         data={this.state.data}
@@ -389,7 +405,10 @@ export default class Crossword extends Component {
                             Clear All
                         </button>
 
-                        <div id="debugger">
+                        <div
+                            id="debugger"
+                            className={this.state.debug ? "debugger" : "hide"}
+                        >
                             <div id="mydivheader">[Debugger]</div>
                             <button
                                 className="dbg-button"
