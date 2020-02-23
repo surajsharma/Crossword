@@ -28,6 +28,11 @@ export default class Crossword extends Component {
     handleKeyPress = (event) => {
         const { currentWord, numberOfWords } = this.state.data;
 
+        if (event.key === "Escape") {
+            console.log(event.key);
+            this.setState({ debug: !this.state.debug });
+        }
+
         if (event.key === "Backspace") {
             this.moveToNextCell(true);
         }
@@ -35,6 +40,7 @@ export default class Crossword extends Component {
         if (event.key === "Tab") {
             event.preventDefault();
             this.handleClueClick(
+                event,
                 currentWord === numberOfWords - 1 ? 0 : currentWord + 1
             );
         }
@@ -246,7 +252,7 @@ export default class Crossword extends Component {
         this.revealThis(true);
     };
 
-    handleClueClick = (index) => {
+    handleClueClick = (e, index) => {
         let startingCell = 0;
 
         for (let i = 0; i < index; i++) {
@@ -272,7 +278,7 @@ export default class Crossword extends Component {
 
         if (currentFocus < refs.length - 1) {
             if (backwards === true) {
-                console.log(currentFocus);
+                // console.log(currentFocus);
                 nextCell = currentFocus === 0 ? 0 : currentFocus - 1;
             } else {
                 nextCell = currentFocus + 1;
@@ -370,7 +376,6 @@ export default class Crossword extends Component {
                             currentWord
                         </button>
                     </div>
-
                     <Grid
                         className="grid"
                         data={this.state.data}
