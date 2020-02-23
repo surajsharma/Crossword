@@ -15,7 +15,9 @@ export default class Cell extends Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.clear && prevProps.clear !== this.props.clear) {
-            this.setState({ value: "" });
+            if (this.props.wordNum === this.props.currentWord) {
+                this.setState({ value: "" }, console.log("clearing cell"));
+            }
         }
         if (
             prevProps.currentWord !== this.props.currentWord &&

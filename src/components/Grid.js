@@ -17,7 +17,6 @@ export default class Grid extends Component {
 
     componentDidUpdate(prevProps) {
         let words = [];
-
         if (
             prevProps.currentWord !== this.props.currentWord ||
             this.props.data.revealedWords !== prevProps.data.revealedWords ||
