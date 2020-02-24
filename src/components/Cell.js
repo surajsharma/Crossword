@@ -17,8 +17,11 @@ export default class Cell extends Component {
     componentDidUpdate(prevProps) {
         // console.log("Cell-componentDidUpdate");
         if (this.props !== prevProps) {
-            if (this.props.clear === this.props.wordNum) {
-                this.setState({ value: "" });
+            if (
+                this.props.clear === this.props.wordNum &&
+                this.state.value !== ""
+            ) {
+                this.setState({ value: "" }, console.log("cell cleared"));
                 this.props.deleteClearedWord(this.props.wordNum);
             }
         }
@@ -57,7 +60,6 @@ export default class Cell extends Component {
 
     handleBlur = () => {
         // console.log("Cell-handleBlur");
-
         this.setState({ editing: !this.state.editing });
     };
 

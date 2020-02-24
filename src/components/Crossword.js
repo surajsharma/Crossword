@@ -83,13 +83,16 @@ export default class Crossword extends Component {
             (attempt) => word !== attempt.number
         );
 
-        this.setState((prevState) => ({
-            data: {
-                ...this.state.data,
-                attempts: newAttempts,
-                clearNext: null
-            }
-        }));
+        this.setState(
+            (prevState) => ({
+                data: {
+                    ...this.state.data,
+                    attempts: newAttempts,
+                    clearNext: null
+                }
+            }),
+            console.log("DCW")
+        );
     };
 
     addSolvedWord = (tuple) => {
@@ -243,8 +246,8 @@ export default class Crossword extends Component {
     };
 
     clearThis = () => {
-        // console.log("CW-clearThis");
         const { revealedWords, currentWord } = this.state.data;
+        console.log("CW-clearThis", currentWord);
 
         if (revealedWords.includes(currentWord)) {
             //currentWord is revealed
@@ -267,7 +270,7 @@ export default class Crossword extends Component {
                         clearNext: currentWord
                     }
                 }),
-                this.deleteClearedWord(currentWord)
+                console.log("set clear word")
             );
         }
     };

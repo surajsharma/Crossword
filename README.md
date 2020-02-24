@@ -2,6 +2,10 @@
 
 #TODO
 
+3. CLEAR This
+
+    - clicks on clear this
+
 4. Clear All
 5. Smart Check (This/All)
     - This
