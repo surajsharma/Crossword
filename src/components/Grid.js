@@ -70,9 +70,7 @@ export default class Grid extends Component {
 
         for (let i = 1; i < width; i++) {
             for (let j = 1; j < height; j++) {
-                newGrid.push(
-                    <Cell x={i} y={j} value="-" key={Math.random()} />
-                );
+                newGrid.push(<Cell x={i} y={j} value="-" key={`${i}-${j}`} />);
             }
         }
 

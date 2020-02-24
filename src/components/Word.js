@@ -11,7 +11,6 @@ export default class Word extends Component {
             solved: [],
             indices: [],
             cells: [],
-            editing: this.props.currentWord === this.props.index,
             currentWord: null,
             show: false
         };

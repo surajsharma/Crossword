@@ -21,25 +21,14 @@ export default class Cell extends Component {
                 this.props.clear === this.props.wordNum &&
                 this.state.value !== ""
             ) {
-                this.setState(
-                    { value: "" }
-                    // console.log("cell cleared")
-                );
-                this.props.deleteClearedWord(this.props.wordNum);
+                this.setState({ value: "" });
+                this.props.deleteClearedWord(this.props.clear);
             }
-        }
-
-        if (
-            prevProps.currentWord !== this.props.currentWord &&
-            this.props.currentWord !== null
-        ) {
-            this.setState({ currentWord: this.props.currentWord });
         }
     }
 
     componentDidMount() {
         // console.log("Cell-componentDidMount");
-
         if (typeof this.props.addToRefs === "function") {
             this.props.addToRefs(this.cellRef);
         }
@@ -47,20 +36,13 @@ export default class Cell extends Component {
 
     handleFocus = () => {
         // console.log("Cell-handleFocus");
-
         if (this.props.value !== "-") {
-            this.setState({ editing: !this.state.editing });
             this.props.changeActiveCell({
                 index: this.props.index,
                 wordNum: this.props.wordNum,
                 currentWord: this.props.wordNum
             });
         }
-    };
-
-    handleBlur = () => {
-        // console.log("Cell-handleBlur");
-        this.setState({ editing: !this.state.editing });
     };
 
     handleChange = (e) => {
@@ -85,7 +67,7 @@ export default class Cell extends Component {
                 ? "rgba(0, 0, 0, 0.85)"
                 : this.props.currentWord === this.props.wordNum
                 ? "rgb(200,200,0)"
-                : "rgb(200, 200, 200)";
+                : "rgba(200, 200, 200,0.85)";
 
         const rFill = "rgba(203, 115, 200, 1)";
 

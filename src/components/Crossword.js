@@ -78,7 +78,7 @@ export default class Crossword extends Component {
     }
 
     deleteClearedWord = (word) => {
-        // console.log("CW-deleteClearedWord", word);
+        console.log("CW-deleteClearedWord", word);
         const newAttempts = this.state.data.attempts.filter(
             (attempt) => word !== attempt.number
         );
@@ -188,7 +188,7 @@ export default class Crossword extends Component {
         // console.log("CW-clearEverything");
 
         //first clear all revealed words, if any
-        const { revealedWords } = this.state.data;
+        let { revealedWords, attempts } = this.state.data;
 
         if (revealedWords.length) {
             for (let i = revealedWords.length; i !== 0; i--) {
@@ -198,9 +198,14 @@ export default class Crossword extends Component {
                 data: {
                     ...this.state.data,
                     revealedWords: revealedWords,
-                    clearNext: 0
+                    clearNext: Math.random()
                 }
             }));
+        }
+
+        //then clear all attempts
+        if (attempts.length) {
+            console.log("dont call setstate in loop");
         }
     };
 
@@ -211,8 +216,9 @@ export default class Crossword extends Component {
     revealThis = (all) => {
         // console.log("CW-revealThis");
         let newRevealedWords = [];
+        const { revealedWords } = this.state.data;
 
-        if (all === true) {
+        if (all === true && !revealedWords.length) {
             this.state.data.wordList.forEach((data, index) =>
                 newRevealedWords.push(index)
             );
@@ -232,6 +238,7 @@ export default class Crossword extends Component {
             ) {
                 // console.log("reveal this", this.state.data.currentWord);
                 newRevealedWords.push(this.state.data.currentWord);
+
                 this.setState((prevState) => ({
                     data: {
                         ...this.state.data,
@@ -246,11 +253,11 @@ export default class Crossword extends Component {
     };
 
     clearThis = () => {
-        const { revealedWords, currentWord } = this.state.data;
         // console.log("CW-clearThis", currentWord);
+        const { revealedWords, currentWord } = this.state.data;
 
+        //currentWord is revealed
         if (revealedWords.includes(currentWord)) {
-            //currentWord is revealed
             let newRevealedWords = revealedWords.filter(
                 (r) => r !== currentWord
             );
