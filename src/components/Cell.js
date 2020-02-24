@@ -80,12 +80,14 @@ export default class Cell extends Component {
 
     render() {
         // console.log("Cell-render", this.props.wordNum, this.props.index);
-        const style =
+        const fill =
             this.props.value === "-"
                 ? "rgba(0, 0, 0, 0.85)"
                 : this.props.currentWord === this.props.wordNum
                 ? "rgb(200,200,0)"
                 : "rgb(200, 200, 200)";
+
+        const rFill = "rgba(203, 115, 200, 1)";
 
         const x =
             this.props.x === 1
@@ -122,9 +124,9 @@ export default class Cell extends Component {
                         width={10}
                         height={10}
                         style={{
-                            fill: style,
+                            fill: this.props.show ? rFill : fill,
                             strokeWidth: "0.1px",
-                            stroke: "black"
+                            stroke: this.props.show ? "green" : "black"
                         }}
                     />
                     <text x={x + 0.5} y={y + 2.7} className="small">
