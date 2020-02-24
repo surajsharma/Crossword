@@ -21,7 +21,10 @@ export default class Cell extends Component {
                 this.props.clear === this.props.wordNum &&
                 this.state.value !== ""
             ) {
-                this.setState({ value: "" }, console.log("cell cleared"));
+                this.setState(
+                    { value: "" }
+                    // console.log("cell cleared")
+                );
                 this.props.deleteClearedWord(this.props.wordNum);
             }
         }
@@ -47,14 +50,11 @@ export default class Cell extends Component {
 
         if (this.props.value !== "-") {
             this.setState({ editing: !this.state.editing });
-            this.props.changeActiveCell(
-                {
-                    index: this.props.index,
-                    wordNum: this.props.wordNum,
-                    currentWord: this.props.wordNum
-                },
-                console.log()
-            );
+            this.props.changeActiveCell({
+                index: this.props.index,
+                wordNum: this.props.wordNum,
+                currentWord: this.props.wordNum
+            });
         }
     };
 

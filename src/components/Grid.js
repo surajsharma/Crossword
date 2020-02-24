@@ -80,7 +80,7 @@ export default class Grid extends Component {
     }
 
     handleWordChange = (tuple) => {
-        console.log("Grid-handleWordChange", tuple);
+        // console.log("Grid-handleWordChange", tuple);
         //the incoming tuple is an array, needs sorting by tuple.index
 
         let sorted = tuple.value.slice(0);

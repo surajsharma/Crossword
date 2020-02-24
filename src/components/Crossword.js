@@ -31,7 +31,7 @@ export default class Crossword extends Component {
         const { currentWord, numberOfWords } = this.state.data;
 
         if (event.key === "Escape") {
-            console.log(event.key);
+            // console.log(event.key);
             this.setState({ debug: !this.state.debug });
         }
 
@@ -90,8 +90,8 @@ export default class Crossword extends Component {
                     attempts: newAttempts,
                     clearNext: null
                 }
-            }),
-            console.log("DCW")
+            })
+            // console.log("DCW")
         );
     };
 
@@ -247,7 +247,7 @@ export default class Crossword extends Component {
 
     clearThis = () => {
         const { revealedWords, currentWord } = this.state.data;
-        console.log("CW-clearThis", currentWord);
+        // console.log("CW-clearThis", currentWord);
 
         if (revealedWords.includes(currentWord)) {
             //currentWord is revealed
@@ -269,8 +269,8 @@ export default class Crossword extends Component {
                         ...this.state.data,
                         clearNext: currentWord
                     }
-                }),
-                console.log("set clear word")
+                })
+                // console.log("set clear word")
             );
         }
     };

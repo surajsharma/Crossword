@@ -130,8 +130,8 @@ export default class Word extends Component {
                     number: this.props.number,
                     currentWord: this.props.currentWord,
                     show: show
-                },
-                console.log("WcDu -->", this.props.currentWord)
+                }
+                // console.log("WcDu -->", this.props.currentWord)
             );
         }
     }
@@ -147,7 +147,7 @@ export default class Word extends Component {
     };
 
     handleWordChange = (tuple) => {
-        console.log("Word-handleWordChange", tuple);
+        // console.log("Word-handleWordChange", tuple);
 
         //called by Cell handleChange
         let { indices, solved } = this.state;
