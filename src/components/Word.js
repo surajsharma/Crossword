@@ -120,15 +120,18 @@ export default class Word extends Component {
 
         // console.log(solved, solution);
 
-        if (this.state.solved.length === solution.length) {
+        if (
+            this.state.solved.length === solution.length &&
+            this.props.currentWord !== this.props.clearNext
+        ) {
             this.props.wordChange(
                 {
                     value: solved,
                     number: this.props.number,
                     currentWord: this.props.currentWord,
                     show: show
-                }
-                // console.log("WcDu -->", this.props.currentWord)
+                },
+                console.log("WcDu -->", this.props.currentWord)
             );
         }
     }
