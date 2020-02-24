@@ -26,12 +26,6 @@ export default class Crossword extends Component {
         };
     }
 
-    deleteFromAttempts = (wordNum) => {
-        // extract wordNum
-        // splice attempts at indexof wordnum
-        // setState
-    };
-
     handleKeyPress = (event) => {
         // console.log("CW-handleKeyPress");
         const { currentWord, numberOfWords } = this.state.data;
@@ -84,22 +78,18 @@ export default class Crossword extends Component {
     }
 
     deleteClearedWord = (word) => {
-        console.log("clear word", word);
+        // console.log("CW-deleteClearedWord", word);
         const newAttempts = this.state.data.attempts.filter(
             (attempt) => word !== attempt.number
         );
 
-        console.log(newAttempts);
-        this.setState(
-            (prevState) => ({
-                data: {
-                    ...this.state.data,
-                    attempts: newAttempts,
-                    clearNext: null
-                }
-            })
-            // console.log("Edited attempt ", tuple)
-        );
+        this.setState((prevState) => ({
+            data: {
+                ...this.state.data,
+                attempts: newAttempts,
+                clearNext: null
+            }
+        }));
     };
 
     addSolvedWord = (tuple) => {
@@ -114,7 +104,7 @@ export default class Crossword extends Component {
         }
 
         if (attempts.length !== 0) {
-            console.log("CW-addSolvedWord", tuple);
+            // console.log("CW-addSolvedWord", tuple);
             if (answeredIndices.includes(tuple.number)) {
                 //[0,2,3], tuple.number===2
                 attempts[answeredIndices.indexOf(tuple.number)].word =
@@ -192,8 +182,23 @@ export default class Crossword extends Component {
     };
 
     clearEverything = () => {
-        // console.log("CW-checkAnswers");
-        this.clearThis(true);
+        // console.log("CW-clearEverything");
+
+        //first clear all revealed words, if any
+        const { revealedWords } = this.state.data;
+
+        if (revealedWords.length) {
+            for (let i = revealedWords.length; i !== 0; i--) {
+                revealedWords.pop();
+            }
+            this.setState((prevState) => ({
+                data: {
+                    ...this.state.data,
+                    revealedWords: revealedWords,
+                    clearNext: 0
+                }
+            }));
+        }
     };
 
     checkThis = () => {
@@ -237,13 +242,9 @@ export default class Crossword extends Component {
         }
     };
 
-    clearThis = (all) => {
+    clearThis = () => {
         // console.log("CW-clearThis");
         const { revealedWords, currentWord } = this.state.data;
-
-        if (all === true) {
-            //CLEAR ALL
-        }
 
         if (revealedWords.includes(currentWord)) {
             //currentWord is revealed

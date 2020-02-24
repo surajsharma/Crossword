@@ -41,7 +41,7 @@ export default class Grid extends Component {
                     x={word.x}
                     y={word.y}
                     orientation={word.orientation}
-                    key={word.word}
+                    key={index}
                     wordChange={this.handleWordChange}
                     addToRefs={this.props.addToRefs}
                     moveToNextCell={this.props.moveToNextCell}
@@ -80,7 +80,7 @@ export default class Grid extends Component {
     }
 
     handleWordChange = (tuple) => {
-        console.log("Grid-handleWordChange", tuple);
+        // console.log("Grid-handleWordChange", tuple);
 
         //the incoming tuple is an array, needs sorting by tuple.index
         let sorted = tuple.value.slice(0);

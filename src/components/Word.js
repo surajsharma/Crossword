@@ -143,7 +143,7 @@ export default class Word extends Component {
     };
 
     handleWordChange = (tuple) => {
-        console.log("Word-handleWordChange", tuple);
+        // console.log("Word-handleWordChange", tuple);
 
         //called by Cell handleChange
         let { tuples, indices, solved } = this.state;
