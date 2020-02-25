@@ -21,7 +21,8 @@ export default class Grid extends Component {
             prevProps.currentWord !== this.props.currentWord ||
             this.props.data.revealedWords !== prevProps.data.revealedWords ||
             this.props.data.clearNext !== prevProps.data.clearNext ||
-            this.props.data.attempts !== prevProps.data.attempts
+            this.props.data.attempts !== prevProps.data.attempts ||
+            this.props.data.clearAll !== prevProps.data.clearAll
         ) {
             this.setState({
                 wordsLoaded: false

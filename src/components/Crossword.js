@@ -20,7 +20,8 @@ export default class Crossword extends Component {
                 currentFocus: 0,
                 numberOfWords: 0,
                 currentWord: null,
-                clearNext: null
+                clearNext: null,
+                clearAll: false
             },
             debug: true
         };
@@ -47,6 +48,13 @@ export default class Crossword extends Component {
             );
         }
     };
+
+    componentDidUpdate() {
+        if (this.state.data.clearAll) {
+            // this.resetClearAllFlag();
+            console.log(">", this.state.data.clearAll);
+        }
+    }
 
     componentDidMount() {
         // console.log("CW-componentDidMount");
@@ -79,9 +87,19 @@ export default class Crossword extends Component {
 
     deleteClearedWord = (word) => {
         console.log("CW-deleteClearedWord", word);
-        const newAttempts = this.state.data.attempts.filter(
-            (attempt) => word !== attempt.number
-        );
+        let newAttempts = [];
+        if (word === null) {
+            this.setState((prevState) => ({
+                data: {
+                    ...this.state.data,
+                    clearAll: false
+                }
+            }));
+        } else {
+            newAttempts = this.state.data.attempts.filter(
+                (attempt) => word !== attempt.number
+            );
+        }
 
         this.setState(
             (prevState) => ({
@@ -96,6 +114,7 @@ export default class Crossword extends Component {
     };
 
     addSolvedWord = (tuple) => {
+        console.log("CW-addSolvedWord", tuple);
         let { attempts } = this.state.data;
         let answeredIndices = [];
 
@@ -107,7 +126,6 @@ export default class Crossword extends Component {
         }
 
         if (attempts.length !== 0) {
-            // console.log("CW-addSolvedWord", tuple);
             if (answeredIndices.includes(tuple.number)) {
                 //[0,2,3], tuple.number===2
                 attempts[answeredIndices.indexOf(tuple.number)].word =
@@ -136,6 +154,8 @@ export default class Crossword extends Component {
             }
         } else {
             //add an attempt, check if word hasn't already been cleared
+            console.log("something here");
+
             this.setState(
                 (prevState) => ({
                     data: {
@@ -184,14 +204,14 @@ export default class Crossword extends Component {
         }
     };
 
-    clearEverything = () => {
-        // console.log("CW-clearEverything");
-
+    clearEverything = (reset) => {
+        console.log("CW-clearEverything");
         //first clear all revealed words, if any
         let { revealedWords, attempts } = this.state.data;
 
         if (revealedWords.length) {
-            for (let i = revealedWords.length; i !== 0; i--) {
+            const len = revealedWords.length;
+            for (let index = 0; index < len; index++) {
                 revealedWords.pop();
             }
             this.setState((prevState) => ({
@@ -205,7 +225,16 @@ export default class Crossword extends Component {
 
         //then clear all attempts
         if (attempts.length) {
-            console.log("dont call setstate in loop");
+            const len = attempts.length;
+            for (let index = 0; index < len; index++) {
+                attempts.pop();
+            }
+            this.setState((prevState) => ({
+                data: {
+                    ...this.state.data,
+                    attempts: attempts
+                }
+            }));
         }
     };
 
@@ -367,7 +396,7 @@ export default class Crossword extends Component {
     };
 
     handleNewCurrentWord = (neWord) => {
-        // console.log("CW-handleNewCurrentWord");
+        console.log("CW-handleNewCurrentWord");
         this.setState((prevState) => ({
             data: {
                 ...this.state.data,
@@ -388,36 +417,6 @@ export default class Crossword extends Component {
         if (this.state.data.wordList.length > 0) {
             return (
                 <div className="CW-container" onKeyDown={this.handleKeyPress}>
-                    <div
-                        id="debugger"
-                        className={this.state.debug ? "debugger" : "hide"}
-                    >
-                        <div id="mydivheader">[Debugger]</div>
-                        <button
-                            className="dbg-button"
-                            onClick={this.dumpDebugData}
-                        >
-                            revealedWords
-                        </button>
-                        <button
-                            className="dbg-button"
-                            onClick={this.dumpDebugData}
-                        >
-                            attempts
-                        </button>
-                        <button
-                            className="dbg-button"
-                            onClick={this.dumpDebugData}
-                        >
-                            currentFocus
-                        </button>
-                        <button
-                            className="dbg-button"
-                            onClick={this.dumpDebugData}
-                        >
-                            currentWord
-                        </button>
-                    </div>
                     <Grid
                         className="grid"
                         data={this.state.data}
@@ -433,6 +432,8 @@ export default class Crossword extends Component {
                         clearCurrentWord={this.clearThis}
                         revealAllWords={this.revealAll}
                         clearAllWords={this.clearEverything}
+                        resetClearAllFlag={this.resetClearAllFlag}
+                        resetAttempts={this.resetAttempts}
                     ></Grid>
                     <div className="clues">
                         {this.state.data.clues.map((clue, index) => {
@@ -482,6 +483,36 @@ export default class Crossword extends Component {
                             onClick={this.clearEverything}
                         >
                             Clear All
+                        </button>
+                    </div>
+                    <div
+                        id="debugger"
+                        className={this.state.debug ? "debugger" : "hide"}
+                    >
+                        <div id="mydivheader">[Debugger]</div>
+                        <button
+                            className="dbg-button"
+                            onClick={this.dumpDebugData}
+                        >
+                            revealedWords
+                        </button>
+                        <button
+                            className="dbg-button"
+                            onClick={this.dumpDebugData}
+                        >
+                            attempts
+                        </button>
+                        <button
+                            className="dbg-button"
+                            onClick={this.dumpDebugData}
+                        >
+                            currentFocus
+                        </button>
+                        <button
+                            className="dbg-button"
+                            onClick={this.dumpDebugData}
+                        >
+                            currentWord
                         </button>
                     </div>
                 </div>

@@ -101,6 +101,7 @@ export default class Word extends Component {
                             show={show}
                             clear={clear}
                             deleteClearedWord={this.props.deleteClearedWord}
+                            clearAll={this.props.clearAll}
                         />
                     </React.Fragment>
                 );
