@@ -10,13 +10,20 @@ export default class Grid extends Component {
             grid: [],
             words: [],
             wordsLoaded: false,
-            currentWord: this.props.currentWord
+            currentWord: this.props.currentWord,
+            clearAll: this.props.data.clearAll
         };
     }
 
     componentDidUpdate(prevProps) {
         let words = [];
-        // console.log("Grid-cdu");
+        console.log(
+            "Grid-cdu",
+            prevProps.data.attempts.length,
+            this.props.data.attempts.length
+        );
+
+        //gets an array prop for clearing
         if (
             prevProps.currentWord !== this.props.currentWord ||
             this.props.data.revealedWords !== prevProps.data.revealedWords ||
@@ -24,6 +31,19 @@ export default class Grid extends Component {
             this.props.data.attempts !== prevProps.data.attempts ||
             this.props.data.clearAll !== prevProps.data.clearAll
         ) {
+            if (
+                this.props.data.attempts.length === 0 &&
+                this.props.data.clearAll
+            ) {
+                this.setState(
+                    {
+                        wordsLoaded: false,
+                        clearAll: true
+                    },
+                    console.log("clearAll in words true")
+                );
+            }
+
             this.setState({
                 wordsLoaded: false
             });
@@ -31,8 +51,10 @@ export default class Grid extends Component {
 
         if (
             !this.state.wordsLoaded &&
-            this.props.data.numberOfWords === this.props.data.wordList.length
+            this.props.data.numberOfWords === this.props.data.wordList.length &&
+            !this.state.clearAll
         ) {
+            console.log("words without clearall");
             // WORDS are mapped each time CW rerenders?
             words = this.props.data.wordList.map((word, index) => (
                 <Word
@@ -57,6 +79,37 @@ export default class Grid extends Component {
                 wordsLoaded: true,
                 words: words,
                 currentWord: this.props.currentWord
+            });
+        } else if (
+            !this.state.wordsLoaded &&
+            this.props.data.numberOfWords === this.props.data.wordList.length &&
+            this.state.clearAll
+        ) {
+            console.log("words with clearall");
+            words = this.props.data.wordList.map((word, index) => (
+                <Word
+                    refer={this.props.data.refs[index]}
+                    number={index}
+                    word={word.word}
+                    x={word.x}
+                    y={word.y}
+                    orientation={word.orientation}
+                    key={index}
+                    wordChange={this.handleWordChange}
+                    addToRefs={this.props.addToRefs}
+                    moveToNextCell={this.props.moveToNextCell}
+                    changeActiveCell={this.props.changeActiveCell}
+                    currentWord={this.props.currentWord}
+                    clearNext={index}
+                    revealedWords={this.props.data.revealedWords}
+                    deleteClearedWord={this.props.deleteClearedWord}
+                />
+            ));
+            this.setState({
+                wordsLoaded: true,
+                words: words,
+                currentWord: this.props.currentWord,
+                clearAll: false
             });
         }
     }

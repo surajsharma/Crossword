@@ -11,4 +11,3 @@
             - yes, move to next cell
             - no, reset cell
     - All
-6. implement local / session storage

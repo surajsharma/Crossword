@@ -49,12 +49,7 @@ export default class Crossword extends Component {
         }
     };
 
-    componentDidUpdate() {
-        if (this.state.data.clearAll) {
-            // this.resetClearAllFlag();
-            console.log(">", this.state.data.clearAll);
-        }
-    }
+    componentDidUpdate(prevProps) {}
 
     componentDidMount() {
         // console.log("CW-componentDidMount");
@@ -106,7 +101,8 @@ export default class Crossword extends Component {
                 data: {
                     ...this.state.data,
                     attempts: newAttempts,
-                    clearNext: null
+                    clearNext: null,
+                    clearAll: false
                 }
             })
             // console.log("DCW")
@@ -114,7 +110,7 @@ export default class Crossword extends Component {
     };
 
     addSolvedWord = (tuple) => {
-        console.log("CW-addSolvedWord", tuple);
+        // console.log("CW-addSolvedWord", tuple);
         let { attempts } = this.state.data;
         let answeredIndices = [];
 
@@ -142,29 +138,32 @@ export default class Crossword extends Component {
                 );
             } else {
                 //add an attempt
+                if (!this.state.data.clearAll) {
+                    this.setState(
+                        (prevState) => ({
+                            data: {
+                                ...this.state.data,
+                                attempts: [...this.state.data.attempts, tuple]
+                            }
+                        }),
+                        console.log("Added attempt 1  ", tuple)
+                    );
+                }
+            }
+        } else {
+            //add an attempt, check if word hasn't already been cleared
+
+            if (!this.state.data.clearAll) {
                 this.setState(
                     (prevState) => ({
                         data: {
                             ...this.state.data,
                             attempts: [...this.state.data.attempts, tuple]
                         }
-                    })
-                    // console.log("Added attempt ", tuple)
+                    }),
+                    console.log("Added attempt 2", tuple)
                 );
             }
-        } else {
-            //add an attempt, check if word hasn't already been cleared
-            console.log("something here");
-
-            this.setState(
-                (prevState) => ({
-                    data: {
-                        ...this.state.data,
-                        attempts: [...this.state.data.attempts, tuple]
-                    }
-                })
-                // console.log("Added attempt ", tuple)
-            );
         }
     };
 
@@ -226,13 +225,15 @@ export default class Crossword extends Component {
         //then clear all attempts
         if (attempts.length) {
             const len = attempts.length;
-            for (let index = 0; index < len; index++) {
+
+            for (let index = 0; index <= len; index++) {
                 attempts.pop();
             }
             this.setState((prevState) => ({
                 data: {
                     ...this.state.data,
-                    attempts: attempts
+                    attempts: attempts,
+                    clearAll: true
                 }
             }));
         }
@@ -407,7 +408,7 @@ export default class Crossword extends Component {
     };
 
     handleNewCurrentWord = (neWord) => {
-        console.log("CW-handleNewCurrentWord");
+        // console.log("CW-handleNewCurrentWord");
         this.setState((prevState) => ({
             data: {
                 ...this.state.data,
