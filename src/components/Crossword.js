@@ -81,7 +81,7 @@ export default class Crossword extends Component {
     }
 
     deleteClearedWord = (word) => {
-        console.log("CW-deleteClearedWord", word);
+        // console.log("CW-deleteClearedWord", word);
         let newAttempts = [];
         if (word === null) {
             this.setState((prevState) => ({
@@ -145,8 +145,8 @@ export default class Crossword extends Component {
                                 ...this.state.data,
                                 attempts: [...this.state.data.attempts, tuple]
                             }
-                        }),
-                        console.log("Added attempt 1  ", tuple)
+                        })
+                        // console.log("Added attempt 1  ", tuple)
                     );
                 }
             }
@@ -160,8 +160,8 @@ export default class Crossword extends Component {
                             ...this.state.data,
                             attempts: [...this.state.data.attempts, tuple]
                         }
-                    }),
-                    console.log("Added attempt 2", tuple)
+                    })
+                    // console.log("Added attempt 2", tuple)
                 );
             }
         }
@@ -204,7 +204,7 @@ export default class Crossword extends Component {
     };
 
     clearEverything = (reset) => {
-        console.log("CW-clearEverything");
+        // console.log("CW-clearEverything");
         //first clear all revealed words, if any
         let { revealedWords, attempts } = this.state.data;
 

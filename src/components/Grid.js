@@ -17,11 +17,11 @@ export default class Grid extends Component {
 
     componentDidUpdate(prevProps) {
         let words = [];
-        console.log(
-            "Grid-cdu",
-            prevProps.data.attempts.length,
-            this.props.data.attempts.length
-        );
+        // console.log(
+        //     "Grid-cdu",
+        //     prevProps.data.attempts.length,
+        //     this.props.data.attempts.length
+        // );
 
         //gets an array prop for clearing
         if (
@@ -39,8 +39,8 @@ export default class Grid extends Component {
                     {
                         wordsLoaded: false,
                         clearAll: true
-                    },
-                    console.log("clearAll in words true")
+                    }
+                    // console.log("clearAll in words true")
                 );
             }
 
@@ -54,7 +54,7 @@ export default class Grid extends Component {
             this.props.data.numberOfWords === this.props.data.wordList.length &&
             !this.state.clearAll
         ) {
-            console.log("words without clearall");
+            // console.log("words without clearall");
             // WORDS are mapped each time CW rerenders?
             words = this.props.data.wordList.map((word, index) => (
                 <Word
@@ -85,7 +85,7 @@ export default class Grid extends Component {
             this.props.data.numberOfWords === this.props.data.wordList.length &&
             this.state.clearAll
         ) {
-            console.log("words with clearall");
+            // console.log("words with clearall");
             words = this.props.data.wordList.map((word, index) => (
                 <Word
                     refer={this.props.data.refs[index]}

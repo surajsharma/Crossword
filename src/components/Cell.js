@@ -15,7 +15,7 @@ export default class Cell extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        console.log("Cell-componentDidUpdate", this.props.clearAll);
+        // console.log("Cell-componentDidUpdate", this.props.clearAll);
         if (this.props !== prevProps) {
             if (
                 this.props.clear === this.props.wordNum &&
