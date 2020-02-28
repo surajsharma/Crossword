@@ -23,7 +23,7 @@ export default class Crossword extends Component {
                 clearNext: null,
                 clearAll: false
             },
-            debug: true
+            debug: false
         };
     }
 
