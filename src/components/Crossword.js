@@ -240,17 +240,21 @@ export default class Crossword extends Component {
     };
 
     checkThis = () => {
-        console.log("CW-checkthis");
+        // console.log("CW-checkthis");
         const { currentWord, attempts, answers } = this.state.data;
-        let solvedWord = attempts.filter((a) => a.number === currentWord)[0]
-            .word;
-        let answerWord = answers.filter((a) => a.number === currentWord)[0]
-            .word;
 
-        if (solvedWord === answerWord) {
-            Swal.fire("Correct");
-        } else {
-            Swal.fire("Incorrect");
+        if (attempts.length) {
+            let solvedWord =
+                null ||
+                attempts.filter((a) => a.number === currentWord)[0].word;
+            let answerWord =
+                null || answers.filter((a) => a.number === currentWord)[0].word;
+
+            if (solvedWord && answerWord && solvedWord === answerWord) {
+                Swal.fire("Correct");
+            } else {
+                Swal.fire("Incorrect");
+            }
         }
     };
 
