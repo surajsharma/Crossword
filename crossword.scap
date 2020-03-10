@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ScappleDocument Version="1.1" ID="3B16C745-9212-4805-B86A-318059E2C927">
+    <Notes>
+        <Note ID="0" FontSize="12.105932" Position="88.0,302.0" Width="302.0" Shadow="Yes">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Square">0.561855 0.71062 0.779401</Border>
+                <Fill>0.702319 0.888276 0.974252</Fill>
+            </Appearance>
+            <String>&lt;Cell
+    currentWord={this.props.currentWord}
+    answer={this.props.word[index]}
+    index={index}
+    number={index === 0 ? this.props.number + 1 : null}
+    wordNum={this.props.number}
+    x={
+        this.props.orientation === "across"
+            ? this.props.x + index
+            : this.props.x
+    }
+    y={
+        this.props.orientation === "down"
+            ? this.props.y + index
+            : this.props.y
+    }
+    addToRefs={this.props.addToRefs}
+    moveToNextCell={this.props.moveToNextCell}
+    show={show}
+    clear={clear}
+    onWordChange={this.handleWordChange}
+    changeActiveCell={this.props.changeActiveCell}
+    deleteClearedWord={this.props.deleteClearedWord}
+/&gt;</String>
+            <ConnectedNoteIDs>5, 11, 13</ConnectedNoteIDs>
+            <PointsToNoteIDs>11</PointsToNoteIDs>
+            <Formatting>
+                <FormatRange Underline="Yes">545,145</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="1" FontSize="12.105932" Position="587.0,351.0" Width="301.0" Shadow="Yes">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Square">0.572684 0.758969 0.558154</Border>
+                <Fill>0.715855 0.948712 0.697692</Fill>
+            </Appearance>
+            <String>&lt;Word
+    refer={this.props.data.refs[index]}
+    number={index}
+    word={word.word}
+    x={word.x}
+    y={word.y}
+    orientation={word.orientation}
+    key={index}
+
+    addToRefs={this.props.addToRefs}
+    moveToNextCell={this.props.moveToNextCell}
+    currentWord={this.props.currentWord}
+    clearNext={this.props.data.clearNext}
+    revealedWords={this.props.data.revealedWords}
+    wordChange={this.handleWordChange}       
+    changeActiveCell={this.props.changeActiveCell}
+    deleteClearedWord={this.props.deleteClearedWord}
+/&gt;</String>
+            <ConnectedNoteIDs>6, 11</ConnectedNoteIDs>
+            <Formatting>
+                <FormatRange Underline="Yes">167,1</FormatRange>
+                <FormatRange Underline="Yes">385,150</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="2" FontSize="12.105932" Position="946.0,358.0" Width="319.0" Shadow="Yes">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Square">0.794796 0.560965 0.58607</Border>
+                <Fill>0.957566 0.766747 0.999616</Fill>
+            </Appearance>
+            <String>&lt;Grid
+    className="grid"
+    data={this.state.data}
+    addToRefs={this.addToRefs}
+    moveToNextCell={this.moveToNextCell}
+    currentWord={this.state.data.currentWord}
+    handleNewCurrentWord={this.handleNewCurrentWord}
+    revealCurrentWord={this.revealThis}
+    checkCurrentWord={this.checkThis}
+    clearCurrentWord={this.clearThis}
+    revealAllWords={this.revealAll}
+    clearAllWords={this.clearEverything}
+    addSolvedWord={this.addSolvedWord}
+    deleteClearedWord={this.deleteClearedWord}
+    changeActiveCell={this.changeActiveCell}
+&gt;</String>
+            <ConnectedNoteIDs>4, 7</ConnectedNoteIDs>
+            <PointsToNoteIDs>4</PointsToNoteIDs>
+            <Formatting>
+                <FormatRange Underline="Yes">422,34</FormatRange>
+                <FormatRange Underline="Yes">457,92</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="4" FontSize="12.0" Position="1359.192627,351.0" Width="140.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1">0.794796 0.560965 0.58607</Border>
+                <Fill>0.993495 0.701207 0.732587</Fill>
+            </Appearance>
+            <String>this.state = {
+    data: {
+        height: 13,
+        width: 13,
+        wordList: [],
+        clues: [],
+        answers: [],
+        attempts: [],
+        refs: [],
+        revealedWords: [],
+        currentFocus: 0,
+        numberOfWords: 0,
+        currentWord: null,
+        clearNext: null
+    },
+    debug: true
+};</String>
+            <ConnectedNoteIDs>2</ConnectedNoteIDs>
+            <PointsToNoteIDs>2</PointsToNoteIDs>
+            <Formatting>
+                <FormatRange Underline="Yes">195,25</FormatRange>
+                <FormatRange Underline="Yes">246,27</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="5" FontSize="12.0" Position="118.192657,35.0" Width="242.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1">0.561855 0.71062 0.779401</Border>
+                <Fill>0.702319 0.888276 0.974252</Fill>
+            </Appearance>
+            <String>        this.state = {
+            inputVal: "",
+            value: "",
+            currentWord: this.props.currentWord
+        };
+
+        this.cellRef = React.createRef();</String>
+            <ConnectedNoteIDs>0, 11-13</ConnectedNoteIDs>
+            <Formatting>
+                <FormatRange Underline="Yes">61,5</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="6" FontSize="12.0" Position="529.192627,139.0" Width="327.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1">0.572684 0.758969 0.558154</Border>
+                <Fill>0.715855 0.948712 0.697692</Fill>
+            </Appearance>
+            <String>        this.state = {
+            solution: this.props.word,
+            solved: [],
+            indices: [],
+            cells: [],
+            editing: this.props.currentWord === this.props.index,
+            currentWord: null,
+            show: false
+        };</String>
+            <ConnectedNoteIDs>1</ConnectedNoteIDs>
+            <Formatting>
+                <FormatRange Underline="Yes">62,48</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="7" FontSize="12.0" Position="942.192627,160.0" Width="259.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1">0.794796 0.560965 0.58607</Border>
+                <Fill>0.957566 0.766747 0.999616</Fill>
+            </Appearance>
+            <String>        this.state = {
+            grid: [],
+            words: [],
+            wordsLoaded: false,
+            currentWord: this.props.currentWord
+        };</String>
+            <ConnectedNoteIDs>2</ConnectedNoteIDs>
+        </Note>
+        <Note ID="11" FontSize="12.0" Position="407.0,462.0" Width="115.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <TextColor>0.985948 0.0 0.026951</TextColor>
+                <Border Weight="1">0.794796 0.560965 0.58607</Border>
+                <Fill>0.993495 0.701207 0.732587</Fill>
+            </Appearance>
+            <String>handleWordChange</String>
+            <ConnectedNoteIDs>0-1, 5</ConnectedNoteIDs>
+            <PointsToNoteIDs>1</PointsToNoteIDs>
+        </Note>
+        <Note ID="12" FontSize="12.0" Position="426.0,215.0" Width="77.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <TextColor>0.985948 0.0 0.026951</TextColor>
+                <Border Weight="1">0.794796 0.560965 0.58607</Border>
+                <Fill>0.993495 0.701207 0.732587</Fill>
+            </Appearance>
+            <String>handleFocus</String>
+            <ConnectedNoteIDs>5</ConnectedNoteIDs>
+        </Note>
+        <Note ID="13" FontSize="12.0" Position="20.0,70.0" Width="55.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1">0.561855 0.71062 0.779401</Border>
+                <Fill>0.702319 0.888276 0.974252</Fill>
+            </Appearance>
+            <String>CDU
+CLEAR?</String>
+            <ConnectedNoteIDs>0, 5, 14</ConnectedNoteIDs>
+        </Note>
+        <Note ID="14" FontSize="12.0" Position="408.5,321.0" Width="112.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <TextColor>0.985948 0.0 0.026951</TextColor>
+                <Border Weight="1">0.794796 0.560965 0.58607</Border>
+                <Fill>0.993495 0.701207 0.732587</Fill>
+            </Appearance>
+            <String>deleteClearedWord</String>
+            <ConnectedNoteIDs>13</ConnectedNoteIDs>
+            <Formatting>
+                <FormatRange Underline="Yes">0,17</FormatRange>
+            </Formatting>
+        </Note>
+    </Notes>
+    <BackgroundShapes></BackgroundShapes>
+    <AutoFit>0-2, 4-6, 11-14</AutoFit>
+    <NoteStyles>
+        <Style Name="Bubble (Blue)" ID="EA7BBAD3-7511-4F6A-8D01-ACE1FA939D80" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
+            <BorderThickness>1</BorderThickness>
+            <BorderColor>0.561855 0.71062 0.779401</BorderColor>
+            <FillColor>0.702319 0.888276 0.974252</FillColor>
+        </Style>
+        <Style Name="Bubble (Green)" ID="8BC3B36E-06CF-4623-B65D-6FA00D0BBE7F" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
+            <BorderThickness>1</BorderThickness>
+            <BorderColor>0.572684 0.758969 0.558154</BorderColor>
+            <FillColor>0.715855 0.948712 0.697692</FillColor>
+        </Style>
+        <Style Name="Bubble (Pink)" ID="8BCDAE04-EA24-4349-81E2-796D8F8F08CB" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
+            <BorderThickness>1</BorderThickness>
+            <BorderColor>0.794796 0.560965 0.58607</BorderColor>
+            <FillColor>0.957566 0.766747 0.999616</FillColor>
+        </Style>
+        <Style Name="Bubble (Red)" ID="BA06BDCF-1D0B-473F-A884-6C75995979EB" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
+            <BorderThickness>1</BorderThickness>
+            <BorderColor>0.794796 0.560965 0.58607</BorderColor>
+            <FillColor>0.993495 0.701207 0.732587</FillColor>
+        </Style>
+        <Style Name="Bubble (Yellow)" ID="AA1888A7-108B-4C58-8D77-EEAEBF379FE2" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
+            <BorderThickness>1</BorderThickness>
+            <BorderColor>0.798177 0.714184 0.522055</BorderColor>
+            <FillColor>0.997722 0.89273 0.652569</FillColor>
+        </Style>
+        <Style Name="Red Text" ID="37BE5F72-BA3F-4A02-AA6B-3B70EF10E7AE" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="Yes" AffectNoteBody="No" AffectFade="No">
+            <TextColor>0.985948 0.0 0.026951</TextColor>
+        </Style>
+        <Style Name="Title Text" ID="CE1A3209-CDB5-4EC6-98C5-04F7EF0F0906" AffectFontStyle="Yes" AffectAlignment="Yes" AffectTextColor="No" AffectNoteBody="No" AffectFade="No">
+            <FontSize>28.0</FontSize>
+            <IsBold>Yes</IsBold>
+        </Style>
+    </NoteStyles>
+    <UISettings>
+        <BackgroundColor>pttnimg{iVBORw0KGgoAAAANSUhEUgAAAFAAAACgCAMAAACsXRuGAAADAFBMVEWKiorf39/09PTo6OgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADlLnXTAAAARGVYSWZNTQAqAAAACAABh2kABAAAAAEAAAAaAAAAAAADoAEAAwAAAAEAAQAAoAIABAAAAAEAAABQoAMABAAAAAEAAACgAAAAAHnUHBIAAAESSURBVGgF7ZnRCsQgDAT1/P9/brlHC4Eku6AwPhSKKHEnmwiOMaZujHf83rF0n/M3nOojz7G0wxChDvA/V26IUMtk3XDk8ykDpcvIkIdAAUpaAUMepmOI7y2GCHFKlxFQ+rdtg4ZdrJsTuRIfSZny1c1zg/WAApS0AoY8TMew1fzt1xAhTukyAsqRfbmL9WM9nNKVFKcc6BTD4wLvKTglrYChOKRj2Gr+9muIkJ7SZQSUA3sKUIBSKG2GtOmWF38LkEdYED5aAhSFlyOFC3NAAUpBgRvSpuCGaMkNR5a3APmGkcKFOaAUzPu5ihSEj5YABSgFBW5ImyjtC3M3HFneAuQbFoSPlgClYF56ijxt9O8pD1wQc3PyGUlMAAAAAElFTkSuQmCC}</BackgroundColor>
+        <DefaultFont>Helvetica</DefaultFont>
+    </UISettings>
+    <PrintSettings PaperSize="595.0,842.0" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="iso-a4" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"></PrintSettings>
+</ScappleDocument>
