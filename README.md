@@ -1,1 +1,1 @@
-[![CW.gif](https://s5.gifyu.com/images/CW.gif)](https://gifyu.com/image/7J8j)
+[![CW.gif](https://puu.sh/FWhmK/0017aac2fd.gif)](https://puu.sh/FWhmK/0017aac2fd.gif)
